@@ -1,9 +1,9 @@
-raple
+Raple
 =====
 
 Raple (recursive acronym - Raple's Almost Programming LanguagE) - dynamically typed programming language which I developing for fun. It so happened that it also was my diploma project in University.
 
-По-русскими
+По-русски
 =====
 
 Raple, название является рекурсивным акронимом Raple is Almost Programming LanguagE, - это язык программирования с динамической типизацией, который я разрабатывал для удовольствия еще будучи в студентом. Начало его разработки было примерно в 2008-м году, в последующий год/два я переписывал его полностью несколько раз, и так случилось, что он стал моим дипломным проектом в 2012-м году. В тех пор я к нему не прикосался :) Исходный код проекта хостился на raple.codeplex.com.
