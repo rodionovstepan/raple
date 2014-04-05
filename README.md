@@ -28,7 +28,8 @@ Raple, название является рекурсивным акронимо
          i=i+1;
       }
    }
-   
+</code>
+<code>
    sub main() {
       var lambda = sub(x) {
          if (x < 0) return 0;
