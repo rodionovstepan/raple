@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{134DA12E-C7F3-4CE5-8E8E-1284A09FA096}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Raple</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Sources\FileSourceCodeProvider.cpp" />
+    <ClCompile Include="Sources\HashArray.cpp" />
+    <ClCompile Include="Sources\InternalFunctionsLibrary.cpp" />
+    <ClCompile Include="Sources\RapleEngine.cpp" />
+    <ClCompile Include="Sources\RuntimeEnvironment.cpp" />
+    <ClCompile Include="Sources\Bytecode.cpp" />
+    <ClCompile Include="Sources\Compiler.cpp" />
+    <ClCompile Include="Sources\ConsoleLogger.cpp" />
+    <ClCompile Include="Sources\StaticCgiLibrary.cpp" />
+    <ClCompile Include="Sources\StaticIoLibrary.cpp" />
+    <ClCompile Include="Sources\Var.cpp" />
+    <ClCompile Include="Sources\FileLogger.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Sources\Parser.cpp" />
+    <ClCompile Include="Sources\SourceCode.cpp" />
+    <ClCompile Include="Sources\String.cpp" />
+    <ClCompile Include="Sources\Tokenizer.cpp" />
+    <ClCompile Include="Sources\TreeNode.cpp" />
+    <ClInclude Include="Headers\FileSourceCodeProvider.h" />
+    <ClInclude Include="Headers\HashArray.h" />
+    <ClInclude Include="Headers\HashArrayEntry.h" />
+    <ClInclude Include="Headers\ISourceCodeProvider.h" />
+    <ClInclude Include="Headers\InternalFunctionsLibrary.h" />
+    <ClInclude Include="Headers\IStaticLibrary.h" />
+    <ClInclude Include="Headers\StaticIoLibrary.h" />
+    <ClInclude Include="Headers\StaticLibraryBase.h" />
+    <ClInclude Include="Headers\StaticMathLibrary.h" />
+    <ClInclude Include="Sources\VirtualMachine.cpp" />
+    <ClInclude Include="Headers\StaticCgiLibrary.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Headers\Bytecode.h" />
+    <ClInclude Include="Headers\CallStackFrame.h" />
+    <ClInclude Include="Headers\Compiler.h" />
+    <ClInclude Include="Headers\CompileResult.h" />
+    <ClInclude Include="Headers\Constants.h" />
+    <ClInclude Include="Headers\Convert.h" />
+    <ClInclude Include="Headers\Var.h" />
+    <ClInclude Include="Headers\ILibrary.h" />
+    <ClInclude Include="Headers\IParser.h" />
+    <ClInclude Include="Headers\IRapleEngine.h" />
+    <ClInclude Include="Headers\Stack.h" />
+    <ClInclude Include="Headers\StdLibrary.h" />
+    <ClInclude Include="Headers\RapleEngine.h" />
+    <ClInclude Include="Headers\Sub.h" />
+    <ClInclude Include="Headers\ICompiler.h" />
+    <ClInclude Include="Headers\Instruction.h" />
+    <ClInclude Include="Headers\IRuntimeEnvironment.h" />
+    <ClInclude Include="Headers\IVirtualMachine.h" />
+    <ClInclude Include="Headers\Opcode.h" />
+    <ClInclude Include="Headers\FileLogger.h" />
+    <ClInclude Include="Headers\ILogger.h" />
+    <ClInclude Include="Headers\ParserBase.h" />
+    <ClInclude Include="Headers\ITokenizer.h" />
+    <ClInclude Include="Headers\ConsoleLogger.h" />
+    <ClInclude Include="Headers\NodeDefinition.h" />
+    <ClInclude Include="Headers\Parser.h" />
+    <ClInclude Include="Headers\RuntimeEnvironment.h" />
+    <ClInclude Include="Headers\SourceCode.h" />
+    <ClInclude Include="Headers\String.h" />
+    <ClInclude Include="Headers\System.h" />
+    <ClInclude Include="Headers\Token.h" />
+    <ClInclude Include="Headers\TokenDefinition.h" />
+    <ClInclude Include="Headers\Tokenizer.h" />
+    <ClInclude Include="Headers\TreeNode.h" />
+    <ClInclude Include="Headers\VirtualMachine.h" />
+    <ClInclude Include="Headers\VirtualMachineResult.h" />
+    <ClInclude Include="Headers\StringsLibrary.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
