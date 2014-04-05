@@ -18,16 +18,16 @@ Raple, название является рекурсивным акронимо
 Выполнение программы начинается с выполнения функции main. В этой функции создается лямбда-функция или вложенная функция, которая является предикатом для выборки положительных чисел из массива. Затем вызывается функция filter, которая проходит по массиву и печатает все элементы, удовлетворяющие переданному предикату.
 
 <code>
-   sub filter(array, predicate) {
-      var size = array.size();
-      var i = 0;
-      while (i < size) {
-         if (predicate(array[i]) == 1)
-            io.println(array[i]);
-            
-         i=i+1;
-      }
+sub filter(array, predicate) {
+   var size = array.size();
+   var i = 0;
+   while (i < size) {
+      if (predicate(array[i]) == 1)
+         io.println(array[i]);
+         
+      i=i+1;
    }
+}
 
 </code>
 
