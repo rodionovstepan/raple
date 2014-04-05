@@ -32,7 +32,7 @@ Raple, название является рекурсивным акронимо
    sub main() {
       var lambda = sub(x) {
          if (x < 0) return 0;
-         return 1;
+            return 1;
       };
 
       var array = {-2, 3, 5, 0, -4, -9, -1, 7};
