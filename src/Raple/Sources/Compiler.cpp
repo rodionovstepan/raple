@@ -733,9 +733,23 @@ namespace Raple
 		setGotoIndexToInstruction(gotoInstrIndex);
 
 		if (ifNode->ChildCount() == 2)
+		{
+			setGotoIndexToInstruction(gotoInstrIndex);
 			return crSuccess;
+		}
 
-		return compilePostConditionalStatements(ifNode->GetChild(Constants::TreeIndexIfElseElseStatements));
+		unsigned int jumpToElseInstrIndex = _currentSub->GetBytecode()->InstructionCount();
+
+		addCodeInstruction(opGoto);
+		setGotoIndexToInstruction(gotoInstrIndex);
+
+		result = compilePostConditionalStatements(ifNode->GetChild(Constants::TreeIndexIfElseElseStatements));
+		if (result != crSuccess)
+			return result;
+
+		setGotoIndexToInstruction(jumpToElseInstrIndex);
+
+		return crSuccess;
 	}
 
 	CompileResult Compiler::compileWhile(TreeNode *whileNode)

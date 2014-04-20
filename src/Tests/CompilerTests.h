@@ -69,6 +69,7 @@ namespace RapleTests
 			addTest(CompilerTests::TestForMultipleFunctionCalls);
 			addTest(CompilerTests::TestForIfCompilation);
 			addTest(CompilerTests::TestForIfCompilation2);
+			addTest(CompilerTests::TestForIfElseCompilation);
 			addTest(CompilerTests::TestForIfConditionExpressionWithLogicalOperatorCompilation);
 			addTest(CompilerTests::TestForIfConditionExpressionWithDifficultLogicalOperatorsCompilation);
 			addTest(CompilerTests::TestForPostIncrementCompilationFailedIfNodeIsConstant);
@@ -416,6 +417,27 @@ namespace RapleTests
 				assertEquals(args[i], bc->GetInstruction(i)->Argument());
 
 			CompareBytecodes(expectedOpcodes, bc, 9);
+		}
+
+		void TestForIfElseCompilation()
+		{
+			Bytecode *bc = CompileAndExpect("sub main() { if(1)foo('yes');else foo('no'); }", 8);
+
+			Opcode expected[8] = {
+				Raple::opPushInt, Raple::opJumpZero, Raple::opPushString,
+				Raple::opCall, Raple::opGoto, Raple::opPushString, 
+				Raple::opCall, 	Raple::opRet
+			};
+
+			// 21 - это id функции foo для тестов
+			int args[8] = {
+				0, 5, 0, 21, 7, 0, 21, 0
+			};
+
+			for (int i = 0; i < 8; ++i)
+				assertEquals(args[i], bc->GetInstruction(i)->Argument());
+
+			CompareBytecodes(expected, bc, 8);
 		}
 
 		void TestForIfConditionExpressionWithLogicalOperatorCompilation()
