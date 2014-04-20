@@ -44,7 +44,7 @@ namespace Raple
 		
 		CompileResult compileAnonymousSub(TreeNode *anonymousSubNode);
 		CompileResult compileVarDeclaration(TreeNode *varDeclarationNode);
-		CompileResult compileLocalAccess(TreeNode *node);
+		CompileResult compileVarAccess(TreeNode *node);
 		CompileResult compileAssignment(TreeNode *assignmentNode);
 		CompileResult compileBinaryOperator(TreeNode *binaryOperatorNode);
 		CompileResult compileUnaryOperator(TreeNode *unaryOperatorNode);

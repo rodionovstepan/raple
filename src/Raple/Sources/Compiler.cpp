@@ -223,7 +223,7 @@ namespace Raple
 			break;
 
 		case ntIdentifier:
-			result = compileLocalAccess(item);
+			result = compileVarAccess(item);
 			break;
 
 		case ntFunctionCall:
@@ -658,7 +658,7 @@ namespace Raple
 		return result;
 	}
 
-	CompileResult Compiler::compileLocalAccess(TreeNode *node)
+	CompileResult Compiler::compileVarAccess(TreeNode *node)
 	{
 		int id = getLocalIdentificatorByToken(node->GetToken());
 		if (id == Constants::SubUnknownLocalId)
