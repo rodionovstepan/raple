@@ -70,6 +70,8 @@ namespace Raple
 				break;
 
 			case opNeg:
+			case opInc:
+			case opDec:
 				result = executeUnaryOp(instr->GetOpcode());
 				break;
 
@@ -284,6 +286,34 @@ namespace Raple
 				PushFloat(-frame->Float());
 			else if (frame->GetDataType() == dtInteger)
 				PushInt(-frame->Int());
+			else
+			{
+				logUnknownDatatype(frame->GetDataType());
+				return vmrUnknownDataType;
+			}
+
+			return vmrSuccess;
+
+		case opInc:
+
+			if (frame->GetDataType() == dtFloat)
+				PushFloat(frame->Float() + 1.);
+			else if (frame->GetDataType() == dtInteger)
+				PushInt(frame->Int() + 1);
+			else
+			{
+				logUnknownDatatype(frame->GetDataType());
+				return vmrUnknownDataType;
+			}
+
+			return vmrSuccess;
+
+		case opDec:
+
+			if (frame->GetDataType() == dtFloat)
+				PushFloat(frame->Float() - 1.);
+			else if (frame->GetDataType() == dtInteger)
+				PushInt(frame->Int() - 1);
 			else
 			{
 				logUnknownDatatype(frame->GetDataType());

@@ -18,7 +18,7 @@ using namespace RapleLibraries;
 
 static const char *getSourceCode()
 {
-	return "sub main() { var x=true; if(x == false) io.println('yes'); }";
+	return "sub main() { var i=0; var x=i++; io.println(x);}";
 }
 
 int main(int argc, char **argv)
