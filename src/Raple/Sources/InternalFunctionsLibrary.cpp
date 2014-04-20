@@ -30,7 +30,7 @@ namespace Raple
 	{
 		registerFunction(dtString, "length", 0, InternalFunctionsLibrary::string_length);
 		registerFunction(dtString, "indexOf", 1, InternalFunctionsLibrary::string_indexOf);
-		registerFunction(dtString, "type", 1, InternalFunctionsLibrary::string_type);
+		registerFunction(dtString, "type", 0, InternalFunctionsLibrary::string_type);
 		registerFunction(dtString, "toint", 0, InternalFunctionsLibrary::string_toint);
 		registerFunction(dtString, "tostr", 0, InternalFunctionsLibrary::string_tostring);
 

@@ -20,7 +20,7 @@ static const char *getSourceCode()
 {
 	//return "sub callany(f){f();} sub main() { callany(sub(){io.println('yeeeaha!');});}";
 	//return "sub main(){var f=sub(){io.println('asbf');};f();}";
-	return "sub main(){var f=sub(x){io.println(x);}; f('yaaaahoooooooooooooooo!!!');}";
+	return "sub geti(){return 21;}  sub main(){ io.println(geti().tostr().type()); }";
 }
 
 int main(int argc, char **argv)

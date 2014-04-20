@@ -86,6 +86,7 @@ namespace RapleTests
 			addTest(CompilerTests::TestForImportCompilationFully);
 			addTest(CompilerTests::TestForFailIfLibIsNotImported);
 			addTest(CompilerTests::TestForDynamicCall);
+			addTest(CompilerTests::TestForDoubleCall);
 		}
 
 		~CompilerTests()
@@ -639,6 +640,19 @@ namespace RapleTests
 			Opcode expected[5] = {
 				Raple::opGetSub, Raple::opSetLocal,	Raple::opGetLocal, 
 				Raple::opDynamicCall, Raple::opRet
+			};
+
+			CompareBytecodes(expected, bc);
+		}
+
+		void CompilerTests::TestForDoubleCall()
+		{
+			Bytecode *bc = CompileAndExpect("sub main(){var x=21;var v=x.tostr().type();}", 7);
+
+			Opcode expected[7] = {
+				Raple::opPushInt, Raple::opSetLocal, Raple::opGetLocal,
+				Raple::opInternalCall, Raple::opInternalCall, Raple::opSetLocal, 
+				Raple::opRet
 			};
 
 			CompareBytecodes(expected, bc);
