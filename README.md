@@ -18,11 +18,11 @@ Raple, название является рекурсивным акронимо
 Выполнение программы начинается с выполнения функции main. В этой функции создается лямбда-функция или вложенная функция, которая является предикатом для выборки положительных чисел из массива. Затем вызывается функция filter, которая проходит по массиву и печатает все элементы, удовлетворяющие переданному предикату.
 
 ```ruby
-sub filter(array, predicate) {
+sub filter(array, selector) {
  var size = array.size();
  var i = 0;
  while (i < size) {
-  if (predicate(array[i]) == 1)
+  if (selector(array[i]))
    io.println(array[i]);
 
   i = i+1;
@@ -30,13 +30,13 @@ sub filter(array, predicate) {
 }
 
 sub main() {
- var lambda = sub(x) {
+ var selector = sub(x) {
   if (x > 0) return 1;
   return 0;
  };
  
  var array = {-2, 3, 5, 0, -4, -9, -1, 7};
- filter(array, lambda);
+ filter(array, selector);
 }
 ```
 
