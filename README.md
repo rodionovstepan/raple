@@ -31,8 +31,8 @@ sub filter(array, selector) {
 
 sub main() {
  var selector = sub(x) {
-  if (x > 0) return 1;
-  return 0;
+  if (x > 0) return true;
+  return false;
  };
  
  var array = {-2, 3, 5, 0, -4, -9, -1, 7};
