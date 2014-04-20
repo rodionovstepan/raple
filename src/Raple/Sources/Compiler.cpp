@@ -461,6 +461,7 @@ namespace Raple
 			
 		case ttDecrement:
 			addCodeInstruction(opDec);
+			break;
 
 		default:
 			_logger->Error(Constants::LogTitleCompilerError, 
