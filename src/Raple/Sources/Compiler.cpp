@@ -282,6 +282,14 @@ namespace Raple
 			addCodePushStringConstant(constantNode);
 			break;
 
+		case ttTrue:
+			addCodeInstructionWithInt(Raple::opPushInt, 1);
+			break;
+
+		case ttFalse:
+			addCodeInstructionWithInt(Raple::opPushInt, 0);
+			break;
+
 		default:
 			_logger->Error(Constants::LogTitleCompilerError, "Unknown constant token " + 
 								rstring(GetTokenDefinition(constantNode->GetToken()->Type)));
