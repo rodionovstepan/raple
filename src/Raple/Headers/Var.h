@@ -60,7 +60,14 @@ namespace Raple
 		void CallArgument(int id);
 		void Function(int id);
 
-		int Int() const { return _int; }
+		int Int() const 
+		{
+			if (_dataType == dtFloat)
+				return (int)_float;
+
+			return _int;
+		}
+
 		float Float() const 
 		{
 			if (_dataType == dtInteger)
