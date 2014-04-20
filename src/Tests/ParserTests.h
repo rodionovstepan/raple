@@ -67,6 +67,7 @@ namespace RapleTests
 			addTest(ParserTests::CorrectlyParseWhileCycle);
 			addTest(ParserTests::CorrectlyParseInstanceFunctionCalling);
 			addTest(ParserTests::CorrectlyParseReturnArrayList);
+			addTest(ParserTests::CorrectlyParseTrueFalseContants);
 		}
 
 		~ParserTests()
@@ -531,6 +532,21 @@ namespace RapleTests
 			assertEquals(Raple::ntReturn, returnNode->GetType());
 			assertEquals(1, returnNode->ChildCount());
 			assertEquals(Raple::ntArrayInitList, returnNode->GetChild(0)->GetType());
+		}
+
+		void CorrectlyParseTrueFalseContants()
+		{
+			SourceCode code("sub main(){return true;}");
+
+			TreeNode *root = _parser->ParseScript(&code);
+			TreeNode *body = root->GetChild(TreeIndexCode)->GetChild(TreeIndexSubBody);
+			assertEquals(1, body->ChildCount());
+
+			TreeNode *retNode = body->GetChild(0);
+			assertEquals(Raple::ntReturn, retNode->GetType());
+			assertEquals(1, retNode->ChildCount());
+			assertEquals(Raple::ntConstant, retNode->GetChild(0)->GetType());
+			assertEquals(Raple::ttTrue, retNode->GetChild(0)->GetToken()->Type);
 		}
 
 

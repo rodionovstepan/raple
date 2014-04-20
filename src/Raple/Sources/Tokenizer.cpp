@@ -392,6 +392,12 @@ namespace Raple
 
 		case ttCloseBracket:
 			return "<[]>";
+
+		case ttTrue:
+			return "<true>";
+
+		case ttFalse:
+			return "<false>";
 		}
 
 		return("<???>");

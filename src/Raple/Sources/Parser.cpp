@@ -97,7 +97,9 @@ namespace Raple
 				tokenType == ttDecConst ||
 				tokenType == ttFloatConst ||
 				tokenType == ttHexConst ||
-				tokenType == ttString;
+				tokenType == ttString ||
+				tokenType == ttTrue || 
+				tokenType == ttFalse;
 	}
 
 	bool Parser::isAssignOperator(TokenType tokenType)
