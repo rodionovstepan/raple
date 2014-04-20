@@ -22,6 +22,7 @@ namespace RapleLibraries
 		StaticMathLibrary()
 		{
 			registerSub("sin", 1, StaticMathLibrary::math_sin);
+			registerSub("fib", 1, StaticMathLibrary::math_fib);
 		}
 
 		~StaticMathLibrary()
@@ -44,6 +45,25 @@ namespace RapleLibraries
 				vm->PushNull();
 
 			return 0;
+		}
+
+		static int math_fib(IVirtualMachine *vm)
+		{
+			Var *v = vm->Pop();
+			if (Var::IsNumericType(v->GetDataType()))
+				vm->PushInt(_math_fib(v->Int()));
+			else
+				vm->PushNull();
+
+			return 0;
+		}
+
+		static int _math_fib(int n)
+		{
+			if (n == 0 || n == 1)
+				return n;
+
+			return _math_fib(n-1) + _math_fib(n-2);
 		}
 	};
 };
