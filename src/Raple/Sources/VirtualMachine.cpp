@@ -284,6 +284,11 @@ namespace Raple
 				PushFloat(-frame->Float());
 			else if (frame->GetDataType() == dtInteger)
 				PushInt(-frame->Int());
+			else
+			{
+				logUnknownDatatype(frame->GetDataType());
+				return vmrUnknownDataType;
+			}
 
 			return vmrSuccess;
 		}
