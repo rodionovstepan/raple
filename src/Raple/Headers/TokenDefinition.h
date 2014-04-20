@@ -64,7 +64,9 @@ namespace Raple
 		ttElse,					// else
 		ttReturn,				// return
 		ttWhile,				// while
-		ttImport				// import
+		ttImport,				// import
+		ttTrue,					// true
+		ttFalse					// false
 	};
 
 	struct TokenWord
@@ -118,7 +120,9 @@ namespace Raple
 		{ "and", ttAnd },
 		{ "or", ttOr },
 		{ "while", ttWhile },
-		{ "import", ttImport }
+		{ "import", ttImport },
+		{ "true", ttTrue },
+		{ "false", ttFalse }
 	};
 
 	const int NumberOfTokenWords = sizeof(TokenWords) / sizeof(TokenWord);
