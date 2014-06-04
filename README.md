@@ -1,7 +1,7 @@
 Raple
 =====
 
-Raple - dynamically typed programming language which I developing for fun. It so happened that it also was my diploma project in University.
+Raple is dynamically typed programming language which I developing for fun. It so happened that it also was my diploma project in University.
 
 По-русски
 =====
