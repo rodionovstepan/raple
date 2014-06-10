@@ -5,6 +5,7 @@
 #include "../Headers/tinydir.h"
 //-------------------------------------
 #include <iostream>
+#include <stdio.h>
 //-------------------------------------
 
 
@@ -15,6 +16,7 @@ namespace RapleLibraries
 		registerSub("print", 1, StaticIoLibrary::io_print);
 		registerSub("println", 1, StaticIoLibrary::io_println);
 		registerSub("ls", 1, StaticIoLibrary::io_ls);
+		registerSub("remove", 1, StaticIoLibrary::io_remove);
 	}
 
 	StaticIoLibrary::~StaticIoLibrary()
@@ -60,6 +62,19 @@ namespace RapleLibraries
 		tinydir_close(&dir);
 
 		vm->PushArrayPointer(result);
+		return 0;
+	}
+
+	int StaticIoLibrary::io_remove(IVirtualMachine *vm)
+	{
+		Var *v = vm->Pop();
+		if (Var::IsStringType(v->GetDataType()) == false)
+		{
+			vm->PushInt(-1);
+			return 1;
+		}
+
+		vm->PushInt(remove(v->String()->GetBuffer()));
 		return 0;
 	}
 

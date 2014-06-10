@@ -18,7 +18,7 @@ using namespace RapleLibraries;
 
 static const char *getSourceCode()
 {
-	return "sub main(){ var list = io.ls('c:\\fil2\\filmoscop2'); var i=0,n=list.size(); while(i<n){ io.println(list[i]); i=i+1; } }";
+	return "sub main(){ io.println(io.remove('c:\\fil2\\test.txt')); }";
 }
 
 int main(int argc, char **argv)
