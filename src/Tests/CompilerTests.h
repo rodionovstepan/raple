@@ -88,6 +88,7 @@ namespace RapleTests
 			addTest(CompilerTests::TestForFailIfLibIsNotImported);
 			addTest(CompilerTests::TestForDynamicCall);
 			addTest(CompilerTests::TestForDoubleCall);
+			addTest(CompilerTests::TestForComboIfExpressionCompilation);
 		}
 
 		~CompilerTests()
@@ -459,6 +460,27 @@ namespace RapleTests
 				assertEquals(args[i], bc->GetInstruction(i)->Argument());
 
 			CompareBytecodes(expected, bc, 11);
+		}
+
+		void TestForComboIfExpressionCompilation()
+		{
+			Bytecode *bc = CompileAndExpect("sub main(){if (1 != 1 && 1 != 2) return 2; return 1;}", 13);
+
+			Opcode expected[13] = {
+				Raple::opPushInt, Raple::opPushInt, Raple::opNotEqual,
+				Raple::opJumpZero, Raple::opPushInt, Raple::opPushInt, 
+				Raple::opNotEqual, Raple::opJumpZero, Raple::opPushInt,
+				Raple::opRet, Raple::opPushInt, Raple::opRet, Raple::opRet
+			};
+
+			int args[13] = {
+				0, 0, 0, 10, 0, 0, 0, 10, 0, 1, 0, 1, 0
+			};
+
+			for (int i = 0; i < 13; ++i)
+				assertEquals(args[i], bc->GetInstruction(i)->Argument());
+
+			CompareBytecodes(expected, bc, 13);
 		}
 
 		void TestForIfConditionExpressionWithDifficultLogicalOperatorsCompilation()
