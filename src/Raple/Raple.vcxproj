@@ -104,6 +104,7 @@
     <ClInclude Include="Headers\StaticIoLibrary.h" />
     <ClInclude Include="Headers\StaticLibraryBase.h" />
     <ClInclude Include="Headers\StaticMathLibrary.h" />
+    <ClInclude Include="Headers\tinydir.h" />
     <ClInclude Include="Sources\VirtualMachine.cpp" />
     <ClInclude Include="Headers\StaticCgiLibrary.h" />
   </ItemGroup>

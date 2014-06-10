@@ -49,6 +49,9 @@
     <Filter Include="Header Files\Libs">
       <UniqueIdentifier>{ea386fb6-648f-4ca6-90c7-51f9bdd8b4f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\External">
+      <UniqueIdentifier>{63cf8168-e3a7-4e28-8f7b-26a2be3e3e9d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -250,6 +253,9 @@
     </ClInclude>
     <ClInclude Include="Headers\StaticIoLibrary.h">
       <Filter>Header Files\Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\tinydir.h">
+      <Filter>Header Files\External</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
