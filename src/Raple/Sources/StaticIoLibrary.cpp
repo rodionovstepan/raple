@@ -7,6 +7,8 @@
 #include <iostream>
 #include <fstream>
 #include <stdio.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 //-------------------------------------
 
 
@@ -19,6 +21,8 @@ namespace RapleLibraries
 		registerSub("ls", 1, StaticIoLibrary::io_ls);
 		registerSub("remove", 1, StaticIoLibrary::io_remove);
 		registerSub("copy", 2, StaticIoLibrary::io_copy);
+		registerSub("fexists", 1, StaticIoLibrary::io_fexists);
+		registerSub("dexists", 1, StaticIoLibrary::io_dexists);
 	}
 
 	StaticIoLibrary::~StaticIoLibrary()
@@ -95,7 +99,46 @@ namespace RapleLibraries
 		{
 			std::ofstream out(to->String()->GetBuffer(), std::ios::binary);
 			out << in.rdbuf();
+
+			in.close();
+			out.close();
 		}
+
+		return 0;
+	}
+
+	int StaticIoLibrary::io_fexists(IVirtualMachine *vm)
+	{
+		Var *path = vm->Pop();
+		if (Var::IsStringType(path->GetDataType()) == false)
+		{
+			vm->PushInt(0);
+			return 1;
+		}
+
+		struct stat info;
+		if (stat(path->String()->GetBuffer(), &info) != 0 || info.st_mode & S_IFDIR)
+			vm->PushInt(0);
+		else
+			vm->PushInt(1);
+
+		return 0;
+	}
+
+	int StaticIoLibrary::io_dexists(IVirtualMachine *vm)
+	{
+		Var *path = vm->Pop();
+		if (Var::IsStringType(path->GetDataType()) == false)
+		{
+			vm->PushInt(0);
+			return 1;
+		}
+
+		struct stat info;
+		if (stat(path->String()->GetBuffer(), &info) != 0 || info.st_mode & S_IFDIR == false)
+			vm->PushInt(0);
+		else
+			vm->PushInt(1);
 
 		return 0;
 	}
