@@ -32,6 +32,7 @@ namespace RapleLibraries
 		static int io_ls(IVirtualMachine *vm);
 
 		static int io_remove(IVirtualMachine *vm);
+		static int io_copy(IVirtualMachine *vm);
 
 		//----
 		static void print_var(Var *var);

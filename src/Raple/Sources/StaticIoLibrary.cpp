@@ -5,6 +5,7 @@
 #include "../Headers/tinydir.h"
 //-------------------------------------
 #include <iostream>
+#include <fstream>
 #include <stdio.h>
 //-------------------------------------
 
@@ -17,6 +18,7 @@ namespace RapleLibraries
 		registerSub("println", 1, StaticIoLibrary::io_println);
 		registerSub("ls", 1, StaticIoLibrary::io_ls);
 		registerSub("remove", 1, StaticIoLibrary::io_remove);
+		registerSub("copy", 2, StaticIoLibrary::io_copy);
 	}
 
 	StaticIoLibrary::~StaticIoLibrary()
@@ -75,6 +77,26 @@ namespace RapleLibraries
 		}
 
 		vm->PushInt(remove(v->String()->GetBuffer()));
+		return 0;
+	}
+
+	int StaticIoLibrary::io_copy(IVirtualMachine *vm)
+	{
+		Var *to = vm->Pop();
+		Var *from = vm->Pop();
+		if (Var::IsStringType(from->GetDataType()) == false || Var::IsStringType(to->GetDataType()) == false)
+		{
+			vm->PushInt(-1);
+			return 1;
+		}
+
+		std::ifstream in(from->String()->GetBuffer(), std::ios::binary);
+		if (in.good())
+		{
+			std::ofstream out(to->String()->GetBuffer(), std::ios::binary);
+			out << in.rdbuf();
+		}
+
 		return 0;
 	}
 

@@ -18,7 +18,7 @@ using namespace RapleLibraries;
 
 static const char *getSourceCode()
 {
-	return "sub main(){ io.println(io.remove('c:\\fil2\\test.txt')); }";
+	return "sub main(){ io.copy('c:\\fil2\\from.txt','c:\\fil2\\to.txt'); }";
 }
 
 int main(int argc, char **argv)
