@@ -2,6 +2,7 @@
 #include "../Headers/StaticIoLibrary.h"
 #include "../Headers/IVirtualMachine.h"
 #include "../Headers/HashArray.h"
+#include "../Headers/tinydir.h"
 //-------------------------------------
 #include <iostream>
 //-------------------------------------
@@ -13,6 +14,7 @@ namespace RapleLibraries
 	{
 		registerSub("print", 1, StaticIoLibrary::io_print);
 		registerSub("println", 1, StaticIoLibrary::io_println);
+		registerSub("ls", 1, StaticIoLibrary::io_ls);
 	}
 
 	StaticIoLibrary::~StaticIoLibrary()
@@ -31,6 +33,34 @@ namespace RapleLibraries
 		std::cout << "\n";
 
 		return print;
+	}
+
+	int StaticIoLibrary::io_ls(IVirtualMachine *vm)
+	{
+		Var *v = vm->Pop();
+		if (Var::IsStringType(v->GetDataType()) == false)
+			return 1;
+
+		tinydir_dir dir;
+		tinydir_open(&dir, v->String()->GetBuffer());
+
+		int i = 0;
+		HashArray *result = new HashArray();
+
+		while (dir.has_next)
+		{
+			tinydir_file file;
+			tinydir_readfile(&dir, &file);
+
+			result->Set(Var::CreateInt(i++), Var::CreateString(file.name));
+
+			tinydir_next(&dir);
+		}
+
+		tinydir_close(&dir);
+
+		vm->PushArrayPointer(result);
+		return 0;
 	}
 
 	void StaticIoLibrary::print_var(Var *var)

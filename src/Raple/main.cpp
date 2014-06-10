@@ -18,7 +18,7 @@ using namespace RapleLibraries;
 
 static const char *getSourceCode()
 {
-	return "import math; sub fib(n){ if (n == 1 || n == 0) return n; return fib(n-1) + fib(n-2); } sub main() { io.println(math.fib(35)); }";
+	return "sub main(){ var list = io.ls('c:\\fil2\\filmoscop2'); var i=0,n=list.size(); while(i<n){ io.println(list[i]); i=i+1; } }";
 }
 
 int main(int argc, char **argv)
