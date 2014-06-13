@@ -380,26 +380,21 @@ namespace Raple
 		if (result != crSuccess)
 			return result;
 
-		unsigned int gotoInstrIndex = _currentSub->GetBytecode()->InstructionCount();
-
-		switch (logicalOperatorNode->GetToken()->Type)
-		{
-		case ttAnd:
-			addCodeInstruction(opJumpZero);
-			break;
-		case ttOr:
-			addCodeInstruction(opJumpNotZero);
-			break;
-
-		default:
-			return crUnknownToken;
-		}
-
 		result = compileExpression(logicalOperatorNode->GetChild(1));
 		if (result != crSuccess)
 			return result;
 
-		setGotoIndexToInstruction(gotoInstrIndex);
+		TokenType type = logicalOperatorNode->GetToken()->Type;
+		if (type == ttAnd)
+			addCodeInstruction(opLogicAnd);
+		else if (type == ttOr)
+			addCodeInstruction(opLogicOr);
+		else
+		{
+			_logger->Error(Constants::LogTitleCompilerError, "Unknown logic operator");
+			return crUnknownToken;
+		}
+
 		return crSuccess;
 	}
 	
@@ -738,8 +733,6 @@ namespace Raple
 		result = compilePostConditionalStatements(ifNode->GetChild(Constants::TreeIndexIfElseIfStatements));
 		if (result != crSuccess)
 			return result;
-
-		setGotoIndexToInstruction(gotoInstrIndex);
 
 		if (ifNode->ChildCount() == 2)
 		{

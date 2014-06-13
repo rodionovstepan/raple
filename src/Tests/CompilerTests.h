@@ -447,13 +447,13 @@ namespace RapleTests
 
 			Opcode expected[11] = {
 				Raple::opPushInt, Raple::opPushInt, Raple::opEqual,
-				Raple::opJumpZero, Raple::opPushInt, Raple::opPushInt, 
-				Raple::opEqual, Raple::opJumpZero, Raple::opRet, 
+				Raple::opPushInt, Raple::opPushInt, Raple::opEqual, 
+				Raple::opLogicAnd, Raple::opJumpZero, Raple::opRet, 
 				Raple::opRet, Raple::opRet
 			};
 
 			int args[11] = {
-				0, 0, 0, 7, 0, 0, 0, 9, 0, 0, 0
+				0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0
 			};
 
 			for (int i = 0; i < 11; ++i)
@@ -468,13 +468,13 @@ namespace RapleTests
 
 			Opcode expected[13] = {
 				Raple::opPushInt, Raple::opPushInt, Raple::opNotEqual,
-				Raple::opJumpZero, Raple::opPushInt, Raple::opPushInt, 
-				Raple::opNotEqual, Raple::opJumpZero, Raple::opPushInt,
+				Raple::opPushInt, Raple::opPushInt, Raple::opNotEqual, 
+				Raple::opLogicAnd, Raple::opJumpZero, Raple::opPushInt,
 				Raple::opRet, Raple::opPushInt, Raple::opRet, Raple::opRet
 			};
 
 			int args[13] = {
-				0, 0, 0, 10, 0, 0, 0, 10, 0, 1, 0, 1, 0
+				0, 0, 0, 0, 0, 0, 0, 10, 0, 1, 0, 1, 0
 			};
 
 			for (int i = 0; i < 13; ++i)
@@ -485,18 +485,18 @@ namespace RapleTests
 
 		void TestForIfConditionExpressionWithDifficultLogicalOperatorsCompilation()
 		{
-			Bytecode *bc = CompileAndExpect("sub main(){if((1==2&&2==3)||3==4)return;return;}", 15);
+			Bytecode *bc = CompileAndExpect("sub main(){if((1==2&&2==3)||3==3)return;return;}", 15);
 
 			Opcode expected[15] = {
 				Raple::opPushInt, Raple::opPushInt, Raple::opEqual,
-				Raple::opJumpZero, Raple::opPushInt, Raple::opPushInt, 
-				Raple::opEqual, Raple::opJumpNotZero, Raple::opPushInt, 
-				Raple::opPushInt, Raple::opEqual, Raple::opJumpZero,
+				Raple::opPushInt, Raple::opPushInt, Raple::opEqual, 
+				Raple::opLogicAnd, Raple::opPushInt, Raple::opPushInt, 
+				Raple::opEqual, Raple::opLogicOr, Raple::opJumpZero,
 				Raple::opRet, Raple::opRet, Raple::opRet
 			};
 
 			int args[15] = {
-				0, 0, 0, 7, 0, 0, 0, 11, 0, 0, 0, 13, 0, 0, 0
+				0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0, 0
 			};
 
 			for (int i = 0; i < 15; ++i)

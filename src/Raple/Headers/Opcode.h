@@ -32,6 +32,8 @@ namespace Raple
 		opLessOrEqual,
 		opInc,
 		opDec,
+		opLogicAnd,
+		opLogicOr,
 
 		opNewArray,
 		opGetElement,

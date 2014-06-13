@@ -75,6 +75,11 @@ namespace Raple
 				result = executeUnaryOp(instr->GetOpcode());
 				break;
 
+			case opLogicAnd:
+			case opLogicOr:
+				result = executeLogicOp(instr->GetOpcode());
+				break;
+
 			case opGetLocal:
 				result = executeGetLocal(instr->Argument());
 				break;
@@ -594,6 +599,34 @@ namespace Raple
 				return vmrUnknownDataType;
 			}
 		}
+
+		return vmrSuccess;
+	}
+
+	inline VirtualMachineResult VirtualMachine::executeLogicOp(Opcode opcode)
+	{
+		checkPop(2);
+
+		Var *v1 = Pop();
+		Var *v2 = Pop();
+		int i1 = v1->Int(), i2 = v2->Int();
+
+		if (opcode == opLogicAnd)
+		{			
+			if (i1 != 0 && i2 != 0)
+				PushInt(1);
+			else
+				PushInt(0);
+		}
+		else if (opcode == opLogicOr)
+		{
+			if (i1 != 0 || i2 != 0)
+				PushInt(1);
+			else 
+				PushInt(0);
+		}
+		else
+			return vmrUnknownOpcode;
 
 		return vmrSuccess;
 	}

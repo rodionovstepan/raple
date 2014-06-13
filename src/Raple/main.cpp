@@ -18,7 +18,7 @@ using namespace RapleLibraries;
 
 static const char *getSourceCode()
 {
-	return "sub main(){ io.println(io.dexists('c:\\fil2\\from.txt')); }";
+	return "sub main(){ io.println(io.remove('c:\\fil2\\empty')); }";
 }
 
 int main(int argc, char **argv)
@@ -41,8 +41,10 @@ int main(int argc, char **argv)
 	StaticMathLibrary mathlib;
 	StaticIoLibrary iolib;
 
-	//FileSourceCodeProvider provider(argc, argv);
-	ConstSourceCodeProvider provider;
+	argv = new char *[2];
+	argv[1] = "c:\\raple\\test.r";
+	FileSourceCodeProvider provider(2, argv);
+	//ConstSourceCodeProvider provider;
 
 	engine.RegisterLibrary(&stdlib);
 	engine.RegisterLibrary(&strlib);

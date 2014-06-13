@@ -124,6 +124,7 @@ namespace Raple
 		inline VirtualMachineResult executeNewArray(unsigned int argument);
 		inline VirtualMachineResult executeSetElement();
 		inline VirtualMachineResult executeGetElement();
+		inline VirtualMachineResult executeLogicOp(Opcode opcode);
 	};
 }
 
