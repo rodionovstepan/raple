@@ -23,6 +23,7 @@ namespace RapleLibraries
 		registerSub("copy", 2, StaticIoLibrary::io_copy);
 		registerSub("fexists", 1, StaticIoLibrary::io_fexists);
 		registerSub("dexists", 1, StaticIoLibrary::io_dexists);
+		registerSub("getfname", 1, StaticIoLibrary::io_getfname);
 	}
 
 	StaticIoLibrary::~StaticIoLibrary()
@@ -139,6 +140,25 @@ namespace RapleLibraries
 			vm->PushInt(0);
 		else
 			vm->PushInt(1);
+
+		return 0;
+	}
+
+	int StaticIoLibrary::io_getfname(IVirtualMachine *vm)
+	{
+		Var *v = vm->Pop();
+		if (Var::IsStringType(v->GetDataType()) == false)
+		{
+			vm->PushNull();
+			return 0;
+		}
+
+		int extindex = v->String()->LastIndexOf('\\');
+		int len = v->String()->Length();
+		if (extindex == -1)
+			vm->PushString(v->String()->GetBuffer());
+		else
+			vm->PushString(v->String()->Substring(extindex+1, len - extindex));
 
 		return 0;
 	}

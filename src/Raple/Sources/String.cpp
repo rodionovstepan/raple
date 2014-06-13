@@ -242,6 +242,15 @@ namespace Raple
 		return new String(*this);
 	}
 
+	int String::LastIndexOf(char c) const
+	{
+		for (int i = _len-1; i >= 0; --i)
+			if (_str[i] == c)
+				return i;
+
+		return -1;
+	}
+
 	int String::IndexOf(char c) const
 	{
 		for (int i = 0; i < _len; ++i)

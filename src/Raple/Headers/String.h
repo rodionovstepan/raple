@@ -41,6 +41,7 @@ namespace Raple
 		unsigned int Hash() const;
 		String *Clone() const;
 
+		int LastIndexOf(char c) const;
 		int IndexOf(char c) const;
 		int IndexOf(unsigned int begin, char c) const;
 
