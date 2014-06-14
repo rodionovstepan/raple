@@ -16,6 +16,7 @@ namespace RapleLibraries
 {
 	StaticIoLibrary::StaticIoLibrary()
 	{
+		registerSub("read", 0, StaticIoLibrary::io_read);
 		registerSub("print", 1, StaticIoLibrary::io_print);
 		registerSub("println", 1, StaticIoLibrary::io_println);
 		registerSub("ls", 1, StaticIoLibrary::io_ls);
@@ -24,10 +25,19 @@ namespace RapleLibraries
 		registerSub("fexists", 1, StaticIoLibrary::io_fexists);
 		registerSub("dexists", 1, StaticIoLibrary::io_dexists);
 		registerSub("getfname", 1, StaticIoLibrary::io_getfname);
+		registerSub("getfext", 1, StaticIoLibrary::io_getfext);
 	}
 
 	StaticIoLibrary::~StaticIoLibrary()
 	{
+	}
+	
+	int StaticIoLibrary::io_read(IVirtualMachine *vm)
+	{
+		char c;
+		std::cin >> c;
+
+		return 0;
 	}
 
 	int StaticIoLibrary::io_print(IVirtualMachine *vm)
@@ -117,11 +127,11 @@ namespace RapleLibraries
 			return 1;
 		}
 
-		struct stat info;
-		if (stat(path->String()->GetBuffer(), &info) != 0 || info.st_mode & S_IFDIR)
+		tinydir_file file;
+		if (tinydir_file_open(&file, path->String()->GetBuffer()) == -1)
 			vm->PushInt(0);
 		else
-			vm->PushInt(1);
+			vm->PushInt(file.is_dir == false);
 
 		return 0;
 	}
@@ -135,11 +145,11 @@ namespace RapleLibraries
 			return 1;
 		}
 
-		struct stat info;
-		if (stat(path->String()->GetBuffer(), &info) != 0 || info.st_mode & S_IFDIR == false)
+		tinydir_file file;
+		if (tinydir_file_open(&file, path->String()->GetBuffer()) == -1)
 			vm->PushInt(0);
 		else
-			vm->PushInt(1);
+			vm->PushInt(file.is_dir);
 
 		return 0;
 	}
@@ -153,12 +163,29 @@ namespace RapleLibraries
 			return 0;
 		}
 
-		int extindex = v->String()->LastIndexOf('\\');
-		int len = v->String()->Length();
-		if (extindex == -1)
-			vm->PushString(v->String()->GetBuffer());
+		tinydir_file file;
+		if (tinydir_file_open(&file, v->String()->GetBuffer()) == -1)
+			vm->PushNull();
 		else
-			vm->PushString(v->String()->Substring(extindex+1, len - extindex));
+			vm->PushString(file.name);
+		
+		return 0;
+	}
+
+	int StaticIoLibrary::io_getfext(IVirtualMachine *vm)
+	{
+		Var *v = vm->Pop();
+		if (Var::IsStringType(v->GetDataType()) == false)
+		{
+			vm->PushNull();
+			return 0;
+		}
+
+		tinydir_file file;
+		if (tinydir_file_open(&file, v->String()->GetBuffer()) == -1)
+			vm->PushNull();
+		else
+			vm->PushString(file.extension);
 
 		return 0;
 	}
