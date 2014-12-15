@@ -33,7 +33,7 @@ namespace Raple
 
 		void AddChild(TreeNode *const childNode);
 		void SetToken(const Token *token);
-		void UpdateData(int position, int length);
+		void UpdateData(int position, int length, int row);
 
 		Token *GetToken() const
 		{

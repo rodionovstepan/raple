@@ -601,10 +601,12 @@ namespace Raple
 		//! приходится два раза доставать строку по данным из токена
 		if (argumentNode->GetType() == ntAssignment)
 		{
-			int id = getLocalIdentificatorByToken(argumentNode->GetChild(0)->GetToken());
+			Token *token = argumentNode->GetChild(0)->GetToken();
+
+			int id = getLocalIdentificatorByToken(token);
 			if (id == Constants::SubUnknownLocalId)
 			{
-				_logger->Error(Constants::LogTitleCompilerError, "Undeclared identifier");
+				_logger->Error(Constants::LogTitleCompilerError, "Undeclared identifier", token->Row);
 				return crFailed;
 			}
 
@@ -658,7 +660,7 @@ namespace Raple
 		int id = getLocalIdentificatorByToken(node->GetToken());
 		if (id == Constants::SubUnknownLocalId)
 		{
-			_logger->Error(Constants::LogTitleCompilerError, "Undeclared identifier");
+			_logger->Error(Constants::LogTitleCompilerError, "Undeclared identifier", node->GetToken()->Row);
 			return crFailed;
 		}
 
@@ -682,7 +684,7 @@ namespace Raple
 		int id = getLocalIdentificatorByToken(assignee->GetToken());
 		if (id == Constants::SubUnknownLocalId)
 		{
-			_logger->Error(Constants::LogTitleCompilerError, "Undeclared identifier");
+			_logger->Error(Constants::LogTitleCompilerError, "Undeclared identifier", assignee->GetToken()->Row);
 			return crFailed;
 		}
 
@@ -709,7 +711,7 @@ namespace Raple
 		int id = getLocalIdentificatorByToken(identifier->GetToken());
 		if (id == Constants::SubUnknownLocalId)
 		{
-			_logger->Error(Constants::LogTitleCompilerError, "Undeclared identifier");
+			_logger->Error(Constants::LogTitleCompilerError, "Undeclared identifier", identifier->GetToken()->Row);
 			return crFailed;
 		}
 
@@ -791,7 +793,7 @@ namespace Raple
 			int id = getLocalIdentificatorByToken(subject->GetToken());
 			if (id == Constants::SubUnknownLocalId)
 			{
-				_logger->Error(Constants::LogTitleCompilerError, "Undeclared identifier");
+				_logger->Error(Constants::LogTitleCompilerError, "Undeclared identifier", subject->GetToken()->Row);
 				return crFailed;
 			}
 

@@ -18,7 +18,7 @@ using namespace RapleLibraries;
 
 static const char *getSourceCode()
 {
-	return "sub main() {io.println('asd');}";
+	return "sub main() {io.println(a);}";
 }
 
 class ConstSourceCodeProvider : public ISourceCodeProvider
@@ -41,7 +41,7 @@ int main(int argc, char **argv)
 	StaticMathLibrary mathlib;
 	StaticIoLibrary iolib;
 
-	FileSourceCodeProvider provider("d:\\tmp\\raple.r");
+	ConstSourceCodeProvider provider;
 
 	engine.RegisterLibrary(&stdlib);
 	engine.RegisterLibrary(&strlib);

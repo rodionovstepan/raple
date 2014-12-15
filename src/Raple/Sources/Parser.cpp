@@ -43,6 +43,8 @@ namespace Raple
 
 			token->Position = _position;
 			_position += token->Length;
+
+			_sourceCode->ConvertPositionToRowColumn(token->Position, &token->Row, 0);
 		}
 		while (token->Type == ttWhitespace ||
 			   token->Type == ttComment);
@@ -237,7 +239,7 @@ namespace Raple
 		}
 
 		node->SetToken(&t);
-		node->UpdateData(t.Position, t.Length);
+		node->UpdateData(t.Position, t.Length, t.Row);
 
 		return node;
 	}
@@ -385,7 +387,7 @@ namespace Raple
 
 			if (t.Type == ttCloseStatementBlock)
 			{
-				node->UpdateData(t.Position, t.Length);
+				node->UpdateData(t.Position, t.Length, t.Row);
 				break;
 			}
 			else
@@ -787,12 +789,12 @@ namespace Raple
 			return node;
 		}
 
-		node->UpdateData(t.Position, t.Length);
+		node->UpdateData(t.Position, t.Length, t.Row);
 
 		getNextToken(&t);
 		if (t.Type == ttCloseStatementBlock)
 		{
-			node->UpdateData(t.Position, t.Length);
+			node->UpdateData(t.Position, t.Length, t.Row);
 			return node;
 		}
 
@@ -804,7 +806,7 @@ namespace Raple
 				continue;
 			else if (t.Type == ttCloseStatementBlock)
 			{
-				node->UpdateData(t.Position, t.Length);
+				node->UpdateData(t.Position, t.Length, t.Row);
 				return node;
 			}
 			else if (t.Type == ttOpenStatementBlock)
@@ -819,7 +821,7 @@ namespace Raple
 					continue;
 				else if (t.Type == ttCloseStatementBlock)
 				{
-					node->UpdateData(t.Position, t.Length);
+					node->UpdateData(t.Position, t.Length, t.Row);
 					return node;
 				}
 				else
@@ -840,7 +842,7 @@ namespace Raple
 					continue;
 				else if (t.Type == ttCloseStatementBlock)
 				{
-					node->UpdateData(t.Position, t.Length);
+					node->UpdateData(t.Position, t.Length, t.Row);
 					return node;
 				}
 				else

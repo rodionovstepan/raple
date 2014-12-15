@@ -77,7 +77,7 @@ namespace Raple
 		_token->Type = token->Type;
 	}
 
-	void TreeNode::UpdateData(int position, int length)
+	void TreeNode::UpdateData(int position, int length, int row)
 	{
 		if(position != 0 || length != 0)
 		{
@@ -97,5 +97,7 @@ namespace Raple
 				}
 			}
 		}
+
+		_token->Row = row;
 	}
 }
