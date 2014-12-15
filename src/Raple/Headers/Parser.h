@@ -32,6 +32,7 @@
 	IFSTATEMENT   = STATBLOCK | STATEMENT
 	WHILE         = 'while' '(' ASSIGNMENT ')' IFSTATEMENT
 	IMPORT        = 'import' IDENTIFIER ';'
+	FOREACH       = 'foreach' '(' IDENTIFIER 'in' ASSIGNMENT ')' IFSTATEMENT
 */
 
 namespace Raple
@@ -60,6 +61,7 @@ namespace Raple
 	private:
 
 		TreeNode *parseWhile();
+		TreeNode *parseForEach();
 		TreeNode *parseFunctionDefinition(bool nameRequired = true);
 		TreeNode *parseFunctionCall();
 		TreeNode *parseIdentifier();
