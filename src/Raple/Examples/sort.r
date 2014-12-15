@@ -9,49 +9,44 @@
 //
 
 
+sub swap(a, i, j) {
+   var tmp = a[i];
+   a[i] = a[j];
+   a[j] = tmp;
+}
+
 sub qsort(a, f, l) {
-	var i = f, 
-		j = l,
-		x = a[(f+l)/2];
+   var i = f, 
+      j = l,
+      x = a[(f+l)/2];
 
-	while (i <= j) {
-		while (a[i] < x) i = i+1;
-		while (a[j] > x) j = j-1;
-		
-		if (i <= j) {
-			if (a[i] > a[j]) {
-				var tmp = a[i];
-				a[i] = a[j];
-				a[j] = tmp;
-			}
+   while (i <= j) {
+      while (a[i] < x) i++;
+      while (a[j] > x) j--;
+      
+      if (i <= j) {
+         if (a[i] > a[j])
+            swap(a, i, j);
 
-			i = i+1;
-			j = j-1;
-		}
-	}
+         i++;
+         j--;
+      }
+   }
 
-	if (i < l) qsort(a, i, l);
-	if (f < j) qsort(a, f, j);
+   if (i < l) qsort(a, i, l);
+   if (f < j) qsort(a, f, j);
 }
 
 sub bsort(a) {
-	var n = a.size(),
-		i = n-1;
+   var n = a.size(),
+      i = n-1;
 
-	while (i > 0) {
-		var j = 0;
+   while (i-- > 0) {
+      var j = -1;
 
-		while (j < i) {
-			if (a[j] > a[j+1]) {
-				var tmp = a[j];
-				a[j] = a[j+1];
-				a[j+1] = tmp;
-			}
-
-			j = j+1;
-		}
-
-		i = i-1;
-	}
+      while (j++ < i) {
+         if (a[j] > a[j+1])
+            swap(a, j, j+1);
+      }
+   }
 }
-
