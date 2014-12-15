@@ -66,7 +66,8 @@ namespace Raple
 		ttWhile,				// while
 		ttImport,				// import
 		ttTrue,					// true
-		ttFalse					// false
+		ttFalse,				// false
+		ttForEach				// foreach
 	};
 
 	struct TokenWord
@@ -122,7 +123,8 @@ namespace Raple
 		{ "while", ttWhile },
 		{ "import", ttImport },
 		{ "true", ttTrue },
-		{ "false", ttFalse }
+		{ "false", ttFalse },
+		{ "foreach", ttForEach }
 	};
 
 	const int NumberOfTokenWords = sizeof(TokenWords) / sizeof(TokenWord);

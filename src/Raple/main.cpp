@@ -41,7 +41,8 @@ int main(int argc, char **argv)
 	StaticMathLibrary mathlib;
 	StaticIoLibrary iolib;
 
-	ConstSourceCodeProvider provider;
+	//ConstSourceCodeProvider provider;
+	FileSourceCodeProvider provider("d:\\tmp\\raple.r");
 
 	engine.RegisterLibrary(&stdlib);
 	engine.RegisterLibrary(&strlib);
