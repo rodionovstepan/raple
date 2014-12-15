@@ -1,7 +1,7 @@
 Debug
-
-/*.suo
-
-/*.sdf
-
-/*.opensdf
+*.suo
+*.sdf
+*.opensdf
+_ReSharper.Raple/*
+*.user
+*.ipch
