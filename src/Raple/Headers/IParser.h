@@ -19,6 +19,7 @@ namespace Raple
 		}
 
 		virtual TreeNode *ParseScript(const SourceCode *sourceCode) = 0;
+		virtual bool HasErrorsWhileParsing() const = 0;
 	};
 }
 

@@ -83,7 +83,7 @@ namespace Raple
 		}
 
 		TreeNode *root = _parser->ParseScript(code);
-		if (root == 0)
+		if (root == 0 || _parser->HasErrorsWhileParsing())
 		{
 			clearResourcesAndLog(code, 0, "Parsing source code failed.");
 			return;

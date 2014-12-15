@@ -80,7 +80,7 @@ namespace Raple
 		int row, column;
 		_sourceCode->ConvertPositionToRowColumn(position, &row, &column);
 
-		line.Format("Error> Expected token '%s' at (%d,%d)", tokenText, row, column);
+		line.Format("Expected token '%s' at (%d,%d)", tokenText, row, column);
 		_logger->Error(Constants::LogTitleParserError, line);
 	}
 
@@ -460,8 +460,7 @@ namespace Raple
 		}
 		else
 		{
-			//unexpectedTokenError(&t);
-			expectedTokenError(")", t.Position);
+			unexpectedTokenError(&t);
 			return node;
 		}
 
