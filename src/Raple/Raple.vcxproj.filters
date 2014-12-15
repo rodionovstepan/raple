@@ -52,6 +52,9 @@
     <Filter Include="Header Files\External">
       <UniqueIdentifier>{7fb0a561-df84-4abe-a225-cbb58272bd8b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Raple code examples">
+      <UniqueIdentifier>{dceb2b39-fb86-4573-9234-92d3802e7e8c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -257,5 +260,10 @@
     <ClInclude Include="Headers\tinydir.h">
       <Filter>Header Files\External</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Examples\sort.r">
+      <Filter>Raple code examples</Filter>
+    </None>
   </ItemGroup>
 </Project>
