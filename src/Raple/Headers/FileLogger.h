@@ -19,8 +19,8 @@ namespace Raple
 		virtual void Log(const rstring &message) const;
 		virtual void Warning(const rstring &title, const rstring &message) const;
 		virtual void Warning(const rstring &message) const;
-		virtual void Error(const rstring &title, const rstring &message) const;
-		virtual void Error(const rstring &message) const;
+		virtual void Error(const rstring &title, const rstring &message, int row = 0) const;
+		virtual void Error(const rstring &message, int row = 0) const;
 	};
 }
 

@@ -84,16 +84,18 @@ namespace RapleTests
 		{
 			std::auto_ptr<TreeNode> tn(new TreeNode(Raple::ntIdentifier));
 		
-			tn->SetToken(new Token(Raple::ttIdentifier, 0, 2));
-			tn->UpdateData(0, 0);
+			tn->SetToken(new Token(Raple::ttIdentifier, 0, 2, 3));
+			tn->UpdateData(0, 0, 0);
 
 			assertEquals(0, tn->GetToken()->Position);
 			assertEquals(2, tn->GetToken()->Length);
+			assertEquals(0, tn->GetToken()->Row);
 
-			tn->UpdateData(3, 3);
+			tn->UpdateData(3, 3, 4);
 
 			assertEquals(0, tn->GetToken()->Position);
 			assertEquals(6, tn->GetToken()->Length);
+			assertEquals(4, tn->GetToken()->Row);
 		}
 
 		void TreeNodeChildsTest()

@@ -14,19 +14,22 @@ namespace Raple
 		TokenType Type;
 		int Position;
 		int Length;
+		int Row;
 
 		Token()
 		{
 			Type = ttUnknown;
 			Position = 0;
 			Length = 0;
+			Row = 0;
 		}
 
-		Token(TokenType tokenType, int position, int length)
+		Token(TokenType tokenType, int position, int length, int row)
 		{
 			Type = tokenType;
 			Position = position;
 			Length = length;
+			Row = row;
 		}
 	};
 }

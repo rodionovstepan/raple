@@ -31,7 +31,7 @@ namespace RapleTestsHelpers
 			catchMessage(message);
 		}
 
-		virtual void Error(const rstring &message) const
+		virtual void Error(const rstring &message, int row = 0) const
 		{
 			catchMessage(message);
 		}
@@ -46,7 +46,7 @@ namespace RapleTestsHelpers
 			catchMessage(message);
 		}
 
-		virtual void Error(const rstring &title, const rstring &message) const
+		virtual void Error(const rstring &title, const rstring &message, int row = 0) const
 		{
 			catchMessage(message);
 		}

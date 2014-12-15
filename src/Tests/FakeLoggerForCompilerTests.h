@@ -28,7 +28,7 @@ namespace RapleTestsHelpers
 		{
 		}
 
-		virtual void Error(const rstring &message) const
+		virtual void Error(const rstring &message, int row = 0) const
 		{
 		}
 
@@ -40,7 +40,7 @@ namespace RapleTestsHelpers
 		{
 		}
 
-		virtual void Error(const rstring &title, const rstring &message) const
+		virtual void Error(const rstring &title, const rstring &message, int row = 0) const
 		{
 			IsErrorLogged = true;
 			ErrorMessage = message;

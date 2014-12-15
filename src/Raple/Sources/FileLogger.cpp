@@ -16,9 +16,12 @@ namespace Raple
 		fprintf((FILE *)_logFile, "Warning> %s\n", message.GetBuffer());
 	}
 
-	void FileLogger::Error(const rstring &message) const
+	void FileLogger::Error(const rstring &message, int row) const
 	{
-		fprintf((FILE *)_logFile, "Error> %s\n", message.GetBuffer());
+		if (row > 0)
+			fprintf((FILE *)_logFile, "Error> %s on line %d\n", message.GetBuffer(), row);
+		else
+			fprintf((FILE *)_logFile, "Error> %s\n", message.GetBuffer());
 	}
 
 	void FileLogger::Warning(const rstring &title, const rstring &message) const
@@ -26,9 +29,12 @@ namespace Raple
 		fprintf((FILE *)_logFile, "%s> %s\n", title.GetBuffer(), message.GetBuffer());
 	}
 
-	void FileLogger::Error(const rstring &title, const rstring &message) const
+	void FileLogger::Error(const rstring &title, const rstring &message, int row) const
 	{
-		fprintf((FILE *)_logFile, "%s> %s\n", title.GetBuffer(), message.GetBuffer());
+		if (row > 0)
+			fprintf((FILE *)_logFile, "%s> %s on line %d\n", title.GetBuffer(), message.GetBuffer(), row);
+		else
+			fprintf((FILE *)_logFile, "%s> %s\n", title.GetBuffer(), message.GetBuffer());
 	}
 
 	FileLogger::FileLogger()

@@ -16,9 +16,12 @@ namespace Raple
 		printf("Warning> %s\n", message.GetBuffer());
 	}
 
-	void ConsoleLogger::Error(const rstring &message) const
+	void ConsoleLogger::Error(const rstring &message, int row) const
 	{
-		printf("Error> %s\n", message.GetBuffer());
+		if (row > 0)
+			printf("Error> %s on line %d\n", message.GetBuffer(), row);
+		else
+			printf("Error> %s\n", message.GetBuffer());
 	}
 
 	void ConsoleLogger::Warning(const rstring &title, const rstring &message) const
@@ -26,8 +29,11 @@ namespace Raple
 		printf("%s> %s\n", title.GetBuffer(), message.GetBuffer());
 	}
 
-	void ConsoleLogger::Error(const rstring &title, const rstring &message) const
+	void ConsoleLogger::Error(const rstring &title, const rstring &message, int row) const
 	{
-		printf("%s> %s\n", title.GetBuffer(), message.GetBuffer());
+		if (row > 0)
+			printf("%s> %s on line %d\n", title.GetBuffer(), message.GetBuffer(), row);
+		else
+			printf("%s> %s\n", title.GetBuffer(), message.GetBuffer());
 	}
 }
