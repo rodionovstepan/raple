@@ -34,7 +34,8 @@ namespace Raple
 		ntIndexing,
 		ntArrayInitList,
 		ntWhile,
-		ntImport
+		ntImport,
+		ntForEach
 	};
 
 	const char *GetTreeNodeDefinition(NodeType nodeType);

@@ -329,6 +329,8 @@ namespace Raple
 			node = parseIfElse();
 		else if (t.Type == ttWhile)
 			node = parseWhile();
+		else if (t.Type == ttForEach)
+			node = parseForEach();
 		else
 		{
 			if (t.Type == ttVar)
@@ -420,7 +422,7 @@ namespace Raple
 		return node;
 	}
 
-	TreeNode *Parser::parseVarDeclaration(bool needVarKeyword)
+	TreeNode *Parser::parseVarDeclaration(bool needVarKeyword, bool needAssignment)
 	{
 		TreeNode *node = new TreeNode(ntVarDeclaration);
 		Token t;
@@ -437,7 +439,7 @@ namespace Raple
 		}
 
 		node->AddChild(parseIdentifier());
-		if (_syntaxError)
+		if (_syntaxError || !needAssignment)
 			return node;
 
 		getNextToken(&t);
@@ -873,6 +875,48 @@ namespace Raple
 		if (t.Type != ttOpenParanthesis)
 		{
 			expectedTokenError("(", t.Position);
+			return node;
+		}
+
+		node->AddChild(parseAssignment());
+
+		getNextToken(&t);
+		if (t.Type != ttCloseParanthesis)
+		{
+			expectedTokenError(")", t.Position);
+			return node;
+		}
+
+		node->AddChild(parsePostConditionalStatements());
+
+		return node;
+	}
+
+	TreeNode *Parser::parseForEach()
+	{
+		TreeNode *node = new TreeNode(ntForEach);
+
+		Token t;
+		getNextToken(&t);
+		if (t.Type != ttForEach)
+		{
+			unexpectedTokenError(&t);
+			return node;
+		}
+
+		getNextToken(&t);
+		if (t.Type != ttOpenParanthesis)
+		{
+			expectedTokenError("(", t.Position);
+			return node;
+		}
+
+		node->AddChild(parseVarDeclaration(false, false));
+
+		getNextToken(&t);
+		if (t.Type != ttIn)
+		{
+			expectedTokenError("in", t.Position);
 			return node;
 		}
 

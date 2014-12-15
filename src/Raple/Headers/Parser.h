@@ -69,7 +69,7 @@ namespace Raple
 		TreeNode *parseConstant();
 		TreeNode *parseStatementsBlock();
 		TreeNode *parseAssignment();
-		TreeNode *parseVarDeclaration(bool needVarKeyword = true);
+		TreeNode *parseVarDeclaration(bool needVarKeyword = true, bool needAssignment = true);
 		TreeNode *parseExpression();
 		TreeNode *parseExpressionTerm();
 		TreeNode *parseExpressionValue();
