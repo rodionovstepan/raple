@@ -21,11 +21,9 @@ Raple, название является рекурсивным акронимо
 sub filter(array, selector) {
  var size = array.size();
  var i = 0;
- while (i < size) {
+ while (i++ < size) {
   if (selector(array[i]))
    io.println(array[i]);
-
-  i = i+1;
  }
 }
 
