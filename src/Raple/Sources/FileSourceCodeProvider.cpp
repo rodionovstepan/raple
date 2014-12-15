@@ -7,9 +7,9 @@
 
 namespace Raple
 {
-	FileSourceCodeProvider::FileSourceCodeProvider(int argc, char **argv)
+	FileSourceCodeProvider::FileSourceCodeProvider(const char *fname)
 	{
-		if (!loadFromFile(argc, argv))
+		if (!loadFromFile(fname))
 			_sourceCode = 0;
 	}
 
@@ -18,13 +18,10 @@ namespace Raple
 		return _sourceCode;
 	}
 
-	bool FileSourceCodeProvider::loadFromFile(int argc, char **argv)
+	bool FileSourceCodeProvider::loadFromFile(const char *fname)
 	{
-		if (argc < 2)
-			return false;
-
 		FILE *input;
-		fopen_s(&input, argv[1], "r");
+		fopen_s(&input, fname, "r");
 
 		if (input == 0)
 			return false;

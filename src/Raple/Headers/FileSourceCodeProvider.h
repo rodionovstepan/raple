@@ -15,7 +15,7 @@ namespace Raple
 
 	public:
 
-		FileSourceCodeProvider(int argc, char **argv);
+		FileSourceCodeProvider(const char *fname);
 		~FileSourceCodeProvider()
 		{
 		}
@@ -24,7 +24,7 @@ namespace Raple
 
 	private:
 
-		bool loadFromFile(int argc, char **argv);
+		bool loadFromFile(const char *fname);
 	};
 }
 
