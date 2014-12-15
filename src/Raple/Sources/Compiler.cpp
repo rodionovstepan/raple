@@ -448,14 +448,16 @@ namespace Raple
 		if (result != crSuccess)
 			return result;
 
+		int id = getLocalIdentificatorByToken(node->GetToken());
+		
 		switch (postOperatorNode->GetToken()->Type)
 		{
 		case ttIncrement:
-			addCodeInstruction(opInc);
+			addCodeInstruction(opInc, id);
 			break;
 			
 		case ttDecrement:
-			addCodeInstruction(opDec);
+			addCodeInstruction(opDec, id);
 			break;
 
 		default:
@@ -650,9 +652,9 @@ namespace Raple
 		if (!isArrayDeclaration)
 			addCodeInstruction(opSetLocal, id);
 
-		// это означается множественное определение переменной
-		// например, var a=2,b=3;
-		// в третьем ноде будет храниться определение b=3.
+		// multiple var declaration
+		// for example, var a=2,b=3;
+		// 3rd node will contains `b=3`.
 		if (vardecNode->ChildCount() == 3)
 			return compileVarDeclaration(vardecNode->GetChild(Constants::TreeIndexVarDeclarationAdditionalNode));
 

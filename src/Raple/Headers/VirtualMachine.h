@@ -111,7 +111,7 @@ namespace Raple
 
 		inline VirtualMachineResult executePush(const Instruction *instruction);
 		inline VirtualMachineResult executeBinaryOp(Opcode opcode);
-		inline VirtualMachineResult executeUnaryOp(Opcode opcode);
+		inline VirtualMachineResult executeUnaryOp(Opcode opcode, unsigned int argument);
 		inline VirtualMachineResult executeGetLocal(unsigned int argument);
 		inline VirtualMachineResult getCallArgumentValue(Var *stackFrame);
 		inline VirtualMachineResult executeSetLocal(unsigned int argument);

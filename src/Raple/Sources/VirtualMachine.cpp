@@ -72,7 +72,7 @@ namespace Raple
 			case opNeg:
 			case opInc:
 			case opDec:
-				result = executeUnaryOp(instr->GetOpcode());
+				result = executeUnaryOp(instr->GetOpcode(), instr->Argument());
 				break;
 
 			case opLogicAnd:
@@ -277,7 +277,7 @@ namespace Raple
 		return vmrUnknownOpcode;
 	}
 
-	inline VirtualMachineResult VirtualMachine::executeUnaryOp(Opcode opcode)
+	inline VirtualMachineResult VirtualMachine::executeUnaryOp(Opcode opcode, unsigned int argument)
 	{
 		checkPop(1);
 
@@ -302,9 +302,21 @@ namespace Raple
 		case opInc:
 
 			if (frame->GetDataType() == dtFloat)
-				PushFloat(frame->Float() + 1.);
+			{
+				Var *var = _runningSub->GetLocal(argument);
+				RapleAssert(var != 0);
+
+				var->Float(frame->Float() + 1.);
+				PushFloat(frame->Float());
+			}
 			else if (frame->GetDataType() == dtInteger)
-				PushInt(frame->Int() + 1);
+			{
+				Var *var = _runningSub->GetLocal(argument);
+				RapleAssert(var != 0);
+
+				var->Int(frame->Int() + 1);
+				PushInt(frame->Int());
+			}
 			else
 			{
 				logUnknownDatatype(frame->GetDataType());
@@ -316,9 +328,21 @@ namespace Raple
 		case opDec:
 
 			if (frame->GetDataType() == dtFloat)
-				PushFloat(frame->Float() - 1.);
+			{
+				Var *var = _runningSub->GetLocal(argument);
+				RapleAssert(var != 0);
+
+				var->Float(frame->Float() - 1.);
+				PushFloat(frame->Float());
+			}
 			else if (frame->GetDataType() == dtInteger)
-				PushInt(frame->Int() - 1);
+			{
+				Var *var = _runningSub->GetLocal(argument);
+				RapleAssert(var != 0);
+
+				var->Int(frame->Int() - 1);
+				PushInt(frame->Int());
+			}
 			else
 			{
 				logUnknownDatatype(frame->GetDataType());
