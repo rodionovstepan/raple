@@ -18,21 +18,21 @@ using namespace RapleLibraries;
 
 static const char *getSourceCode()
 {
-	return "sub main(){ io.println(io.remove('c:\\fil2\\empty')); }";
+	return "sub main() {io.println('asd');}";
 }
+
+class ConstSourceCodeProvider : public ISourceCodeProvider
+{
+public:
+		
+	SourceCode *GetSourceCode() const
+	{
+		return new SourceCode(getSourceCode());
+	}
+};
 
 int main(int argc, char **argv)
 {
-	class ConstSourceCodeProvider : public ISourceCodeProvider
-	{
-	public:
-		
-		SourceCode *GetSourceCode() const
-		{
-			return new SourceCode(getSourceCode());
-		}
-	};
-
 	RapleEngine engine;
 	
 	StdLibrary stdlib;
@@ -41,10 +41,7 @@ int main(int argc, char **argv)
 	StaticMathLibrary mathlib;
 	StaticIoLibrary iolib;
 
-	argv = new char *[2];
-	argv[1] = "c:\\raple\\test.r";
-	FileSourceCodeProvider provider(2, argv);
-	//ConstSourceCodeProvider provider;
+	FileSourceCodeProvider provider("d:\\tmp\\raple.r");
 
 	engine.RegisterLibrary(&stdlib);
 	engine.RegisterLibrary(&strlib);
