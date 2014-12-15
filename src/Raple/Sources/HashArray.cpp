@@ -119,6 +119,11 @@ namespace Raple
 		}
 	}
 
+	void HashArray::Add(Var *value)
+	{
+		Set(Var::CreateInt(_itemCount), value);
+	}
+
 	inline HashArrayEntry *HashArray::getItem(Var *key) const
 	{
 		return _items + (key->GetHash() % _size);

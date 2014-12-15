@@ -36,6 +36,7 @@ namespace Raple
 
 		registerFunction(dtArray, "size", 0, InternalFunctionsLibrary::array_size);
 		registerFunction(dtArray, "type", 0, InternalFunctionsLibrary::array_type);
+		registerFunction(dtArray, "add", 1, InternalFunctionsLibrary::array_add);
 
 		registerFunction(dtInteger, "type", 0, InternalFunctionsLibrary::int_type);
 		registerFunction(dtInteger, "tostr", 0, InternalFunctionsLibrary::int_tostring);

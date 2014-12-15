@@ -25,6 +25,7 @@ namespace Raple
 
 		Var *Get(Var *key);
 		void Set(Var *key, Var *value);
+		void Add(Var *value);
 
 		unsigned int ItemCount() const { return _itemCount; }
 		unsigned int Size() const { return _size; }

@@ -110,6 +110,14 @@ namespace Raple
 			return 0;
 		}
 
+		static int array_add(IVirtualMachine *vm)
+		{
+			Var *array = popVar(vm, dtArray);
+			Var *var = vm->Pop();
+			array->Array()->Add(var);
+			return 0;
+		}
+
 		static int array_tostring(IVirtualMachine *vm)
 		{
 			Var *array = popVar(vm, dtArray);
