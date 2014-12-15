@@ -111,7 +111,9 @@ namespace Raple
 
 	bool Parser::isPreOperator(TokenType tokenType)
 	{
-		return tokenType == ttMinus;
+		return tokenType == ttMinus || 
+			   tokenType == ttIncrement || 
+			   tokenType == ttDecrement;
 	}
 
 	bool Parser::isPostOperator(TokenType tokenType)

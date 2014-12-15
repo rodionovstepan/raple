@@ -70,8 +70,10 @@ namespace Raple
 				break;
 
 			case opNeg:
-			case opInc:
-			case opDec:
+			case opPostInc:
+			case opPostDec:
+			case opPreInc:
+			case opPreDec:
 				result = executeUnaryOp(instr->GetOpcode(), instr->Argument());
 				break;
 
@@ -299,7 +301,8 @@ namespace Raple
 
 			return vmrSuccess;
 
-		case opInc:
+		case opPostInc:
+		case opPreInc:
 
 			if (frame->GetDataType() == dtFloat)
 			{
@@ -307,7 +310,7 @@ namespace Raple
 				RapleAssert(var != 0);
 
 				var->Float(frame->Float() + 1.);
-				PushFloat(frame->Float());
+				PushFloat(opcode == opPostInc ? frame->Float() : var->Float());
 			}
 			else if (frame->GetDataType() == dtInteger)
 			{
@@ -315,7 +318,7 @@ namespace Raple
 				RapleAssert(var != 0);
 
 				var->Int(frame->Int() + 1);
-				PushInt(frame->Int());
+				PushInt(opcode == opPostInc ? frame->Int() : var->Int());
 			}
 			else
 			{
@@ -325,7 +328,8 @@ namespace Raple
 
 			return vmrSuccess;
 
-		case opDec:
+		case opPostDec:
+		case opPreDec:
 
 			if (frame->GetDataType() == dtFloat)
 			{
@@ -333,7 +337,7 @@ namespace Raple
 				RapleAssert(var != 0);
 
 				var->Float(frame->Float() - 1.);
-				PushFloat(frame->Float());
+				PushFloat(opcode == opPostDec ? frame->Float() : var->Float());
 			}
 			else if (frame->GetDataType() == dtInteger)
 			{
@@ -341,7 +345,7 @@ namespace Raple
 				RapleAssert(var != 0);
 
 				var->Int(frame->Int() - 1);
-				PushInt(frame->Int());
+				PushInt(opcode == opPostDec ? frame->Int() : var->Int());
 			}
 			else
 			{

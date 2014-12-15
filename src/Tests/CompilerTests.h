@@ -515,7 +515,7 @@ namespace RapleTests
 			Bytecode *bc = CompileAndExpect("sub main(a){return a++;}", 4);
 			
 			Opcode expected[4] = { 
-				Raple::opGetLocal, Raple::opInc, Raple::opRet, 
+				Raple::opGetLocal, Raple::opPostInc, Raple::opRet, 
 				Raple::opRet
 			};
 			
@@ -527,7 +527,7 @@ namespace RapleTests
 			Bytecode *bc = CompileAndExpect("sub main(a){return 2*a++ -3;}", 8);
 
 			Opcode expected[8] = {
-				Raple::opPushInt, Raple::opGetLocal, Raple::opInc,
+				Raple::opPushInt, Raple::opGetLocal, Raple::opPostInc,
 				Raple::opProd, Raple::opPushInt, Raple::opSub,
 				Raple::opRet, Raple::opRet
 			};

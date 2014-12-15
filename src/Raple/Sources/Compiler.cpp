@@ -420,6 +420,14 @@ namespace Raple
 		case ttMinus:
 			addCodeInstruction(opNeg);
 			break;
+		
+		case ttIncrement:
+			addCodeInstruction(opPreInc);
+			break;
+
+		case ttDecrement:
+			addCodeInstruction(opPreDec);
+			break;
 
 		default:
 			_logger->Error(Constants::LogTitleCompilerError, "Unknown unary operation token " + 
@@ -453,11 +461,11 @@ namespace Raple
 		switch (postOperatorNode->GetToken()->Type)
 		{
 		case ttIncrement:
-			addCodeInstruction(opInc, id);
+			addCodeInstruction(opPostInc, id);
 			break;
-			
+
 		case ttDecrement:
-			addCodeInstruction(opDec, id);
+			addCodeInstruction(opPostDec, id);
 			break;
 
 		default:
