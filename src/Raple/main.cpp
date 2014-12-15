@@ -18,7 +18,7 @@ using namespace RapleLibraries;
 
 static const char *getSourceCode()
 {
-	return "sub main() {io.println(a);}";
+	return "sub main() {var x;}";
 }
 
 class ConstSourceCodeProvider : public ISourceCodeProvider

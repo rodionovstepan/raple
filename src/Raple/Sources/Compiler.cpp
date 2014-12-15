@@ -91,7 +91,7 @@ namespace Raple
 
 		if (!_environment->IsLibraryExists(libname))
 		{
-			_logger->Error(Constants::LogTitleCompilerError, "Unknown library import");
+			_logger->Error(Constants::LogTitleCompilerError, "Unknown library import", importNode->GetToken()->Row);
 			return crFailed;
 		}
 
@@ -259,7 +259,7 @@ namespace Raple
 			break;
 
 		default:
-			_logger->Error(Constants::LogTitleCompilerError, "Unknown expression node type " + rstring(GetTreeNodeDefinition(item->GetType())));
+			_logger->Error(Constants::LogTitleCompilerError, "Unknown expression node type " + rstring(GetTreeNodeDefinition(item->GetType())), item->GetToken()->Row);
 			return crUnknownNode;
 		}
 
@@ -292,7 +292,7 @@ namespace Raple
 
 		default:
 			_logger->Error(Constants::LogTitleCompilerError, "Unknown constant token " + 
-								rstring(GetTokenDefinition(constantNode->GetToken()->Type)));
+				rstring(GetTokenDefinition(constantNode->GetToken()->Type)), constantNode->GetToken()->Row);
 			return crUnknownNode;
 		}
 
@@ -365,7 +365,7 @@ namespace Raple
 
 		default:
 			_logger->Error(Constants::LogTitleCompilerError, "Unknown binary operation token " + 
-								rstring(GetTokenDefinition(binaryOperatorNode->GetToken()->Type)));
+				rstring(GetTokenDefinition(binaryOperatorNode->GetToken()->Type)), binaryOperatorNode->GetToken()->Row);
 			return crUnknownToken;
 		}
 
@@ -391,7 +391,7 @@ namespace Raple
 			addCodeInstruction(opLogicOr);
 		else
 		{
-			_logger->Error(Constants::LogTitleCompilerError, "Unknown logic operator");
+			_logger->Error(Constants::LogTitleCompilerError, "Unknown logic operator", logicalOperatorNode->GetToken()->Row);
 			return crUnknownToken;
 		}
 
@@ -423,7 +423,7 @@ namespace Raple
 
 		default:
 			_logger->Error(Constants::LogTitleCompilerError, "Unknown unary operation token " + 
-								rstring(GetTokenDefinition(unaryOperatorNode->GetToken()->Type)));
+				rstring(GetTokenDefinition(unaryOperatorNode->GetToken()->Type)), unaryOperatorNode->GetToken()->Row);
 			return crUnknownToken;
 		}
 
@@ -439,7 +439,7 @@ namespace Raple
 		{
 			_logger->Error(Constants::LogTitleCompilerError, 
 						   "Post operator" + rstring(GetTokenDefinition(postOperatorNode->GetToken()->Type)) + 
-						   " for constant!");
+						   " for constant!", postOperatorNode->GetToken()->Row);
 
 			return crFailed;
 		}
@@ -461,7 +461,7 @@ namespace Raple
 		default:
 			_logger->Error(Constants::LogTitleCompilerError, 
 						   "Unknown post operator token " + 
-								rstring(GetTokenDefinition(postOperatorNode->GetToken()->Type)));
+						   rstring(GetTokenDefinition(postOperatorNode->GetToken()->Type)), postOperatorNode->GetToken()->Row);
 			return crUnknownToken;
 		}
 
@@ -487,7 +487,7 @@ namespace Raple
 			if (_environment->IsLibraryImported(identifier))
 				return compileStaticLibraryFunctionCall(callNode->GetChild(Constants::TreeIndexFunctionCallInternalCall), identifier.Hash(), expectReturnValue);
 
-			_logger->Error(Constants::LogTitleCompilerError, "Unknown local var or static library identifier");
+			_logger->Error(Constants::LogTitleCompilerError, "Unknown local var or static library identifier", typeNode->GetToken()->Row);
 			return crFailed;
 		}
 
@@ -518,7 +518,7 @@ namespace Raple
 			id = _currentSub->FindLocal(identifier);
 			if (id == Constants::SubUnknownLocalId)
 			{
-				_logger->Error(Constants::LogTitleCompilerError, "Unknown sub identifier");
+				_logger->Error(Constants::LogTitleCompilerError, "Unknown sub identifier", node->GetChild(0)->GetToken()->Row);
 				return crFailed;
 			}
 			
@@ -575,7 +575,11 @@ namespace Raple
 		int argumentCount = argumentList->ChildCount();
 		if (needToCompare && argumentCount != subArgumentCount)
 		{
-			_logger->Error(Constants::LogTitleCompilerError, "Number of arguments doesn't match");
+			if (argumentCount > 0)
+				_logger->Error(Constants::LogTitleCompilerError, "Number of arguments doesn't match", argumentList->GetChild(0)->GetToken()->Row);
+			else
+				_logger->Error(Constants::LogTitleCompilerError, "Number of arguments doesn't match");
+
 			return crFailed;
 		}
 
@@ -623,7 +627,7 @@ namespace Raple
 
 		if (vardecNode->ChildCount() < 2)
 		{
-			_logger->Error(Constants::LogTitleCompilerError, "Var declaration without assignment");
+			_logger->Error(Constants::LogTitleCompilerError, "Var declaration without assignment", vardecNode->GetToken()->Row);
 			return crFailed;
 		}
 
