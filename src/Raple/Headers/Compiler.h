@@ -43,7 +43,7 @@ namespace Raple
 		CompileResult compileDoubleFunctionCall(TreeNode *firstCall, TreeNode *secondCall, bool expectReturnValue);
 		
 		CompileResult compileAnonymousSub(TreeNode *anonymousSubNode);
-		CompileResult compileVarDeclaration(TreeNode *varDeclarationNode, bool compileAssignment = true);
+		CompileResult compileVarDeclaration(TreeNode *varDeclarationNode, bool compileAssignment = true, unsigned int *outid = 0);
 		CompileResult compileVarAccess(TreeNode *node);
 		CompileResult compileAssignment(TreeNode *assignmentNode);
 		CompileResult compileBinaryOperator(TreeNode *binaryOperatorNode);

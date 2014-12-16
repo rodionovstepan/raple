@@ -634,7 +634,7 @@ namespace Raple
 		return crSuccess;
 	}
 
-	CompileResult Compiler::compileVarDeclaration(TreeNode *varDeclarationNode, bool compileAssignment)
+	CompileResult Compiler::compileVarDeclaration(TreeNode *varDeclarationNode, bool compileAssignment, unsigned int *outid)
 	{
 		TreeNode *vardecNode = varDeclarationNode;
 		CompileResult result = crSuccess;
@@ -647,7 +647,13 @@ namespace Raple
 
 		Token *identifierToken = vardecNode->GetChild(Constants::TreeIndexVarDeclarationIdentifier)->GetToken();
 		rstring identifier = _sourceCode->TakePart(identifierToken->Position, identifierToken->Length);
-		unsigned int id = _currentSub->AddNewLocal(identifier);
+
+		unsigned int id = _currentSub->FindLocal(identifier);
+		if (id == -1)
+			id = _currentSub->AddNewLocal(identifier);
+
+		if (outid != 0)
+			*outid = id;
 
 		if (compileAssignment)
 		{
@@ -803,12 +809,14 @@ namespace Raple
 	{
 		RapleAssert(node->ChildCount() == 3);
 
-		CompileResult result = compileVarDeclaration(node->GetChild(0), false);
+		unsigned int iter;
+
+		CompileResult result = compileVarDeclaration(node->GetChild(0), false, &iter);
 		if (result != crSuccess)
 			return result;
 
-		unsigned int iter = _currentSub->GetLastLocalId();
 		unsigned int iterIdx = _currentSub->AddNewAnonymousLocal(dtInteger);
+
 
 		addCodeInstructionWithInt(opPushInt, 0);
 		addCodeInstruction(opSetLocal, iterIdx);
@@ -829,11 +837,11 @@ namespace Raple
 		addCodeInstruction(opGetLocal, iterIdx);
 		addCodeInstruction(opArraySize, arr);
 		addCodeInstruction(opGreater);
-		
-		unsigned int jumpIdx = _currentSub->GetBytecode()->InstructionCount();
-		addCodeInstruction(opJumpNotZero);
 		addCodeInstruction(opSetLocal, iter);
 
+		unsigned int jumpIdx = _currentSub->GetBytecode()->InstructionCount();
+		addCodeInstruction(opJumpNotZero);
+		
 		result = compilePostConditionalStatements(node->GetChild(2));
 		if (result != crSuccess)
 			return result;
