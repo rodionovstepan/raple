@@ -823,10 +823,12 @@ namespace Raple
 		addCodeInstruction(opGetLocal, iterIdx);
 		addCodeInstruction(opGetLocal, arr);
 		addCodeInstruction(opGetNextElement);
+		addCodeInstructionWithInt(opPushInt, 1);
+		addCodeInstruction(opAdd);
 		addCodeInstruction(opSetLocal, iterIdx);
 		addCodeInstruction(opGetLocal, iterIdx);
 		addCodeInstruction(opArraySize, arr);
-		addCodeInstruction(opGreaterOrEqual);
+		addCodeInstruction(opGreater);
 		
 		unsigned int jumpIdx = _currentSub->GetBytecode()->InstructionCount();
 		addCodeInstruction(opJumpNotZero);

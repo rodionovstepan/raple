@@ -631,7 +631,7 @@ namespace Raple
 			return vmrSuccess;
 		}
 
-		for (unsigned int i = index+1; i < n; ++i)
+		for (unsigned int i = index; i < n; ++i)
 		{
 			if (arr->GetByIndex(i)->GetKey() != 0)
 			{
