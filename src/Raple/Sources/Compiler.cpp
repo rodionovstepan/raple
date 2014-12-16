@@ -242,6 +242,10 @@ namespace Raple
 			result = compileWhile(item);
 			break;
 
+		case ntForEach:
+			result = compileForEach(item);
+			break;
+
 		case ntReturn:
 			result = compileReturn(item);
 			break;
@@ -630,35 +634,37 @@ namespace Raple
 		return crSuccess;
 	}
 
-	CompileResult Compiler::compileVarDeclaration(TreeNode *varDeclarationNode)
+	CompileResult Compiler::compileVarDeclaration(TreeNode *varDeclarationNode, bool compileAssignment)
 	{
 		TreeNode *vardecNode = varDeclarationNode;
 		CompileResult result = crSuccess;
 
-		if (vardecNode->ChildCount() < 2)
+		if (vardecNode->ChildCount() < 2 && compileAssignment)
 		{
 			_logger->Error(Constants::LogTitleCompilerError, "Var declaration without assignment", vardecNode->GetToken()->Row);
 			return crFailed;
 		}
 
-		TreeNode *valueNode = vardecNode->GetChild(Constants::TreeIndexVarDeclarationValue);
-		bool isArrayDeclaration = valueNode->GetType() == ntArrayInitList;
-
 		Token *identifierToken = vardecNode->GetChild(Constants::TreeIndexVarDeclarationIdentifier)->GetToken();
 		rstring identifier = _sourceCode->TakePart(identifierToken->Position, identifierToken->Length);
-
 		unsigned int id = _currentSub->AddNewLocal(identifier);
+
+		if (compileAssignment)
+		{
+			TreeNode *valueNode = vardecNode->GetChild(Constants::TreeIndexVarDeclarationValue);
+			bool isArrayDeclaration = valueNode->GetType() == ntArrayInitList;
 		
-		if (isArrayDeclaration)
-			result = compileArrayInitializationList(valueNode, id);
-		else
-			result = compileExpression(valueNode);
+			if (isArrayDeclaration)
+				result = compileArrayInitializationList(valueNode, id);
+			else
+				result = compileExpression(valueNode);
 
-		if (result != crSuccess)
-			return result;
+			if (result != crSuccess)
+				return result;
 
-		if (!isArrayDeclaration)
-			addCodeInstruction(opSetLocal, id);
+			if (!isArrayDeclaration)
+				addCodeInstruction(opSetLocal, id);
+		}
 
 		// multiple var declaration
 		// for example, var a=2,b=3;
@@ -790,6 +796,65 @@ namespace Raple
 		addCodeInstruction(opGoto, conditionInstrIndex);
 		setGotoIndexToInstruction(gotoInstrIndex);
 		
+		return crSuccess;
+	}
+
+	CompileResult Compiler::compileForEach(TreeNode *node)
+	{
+		RapleAssert(node->ChildCount() == 3);
+
+		CompileResult result = compileVarDeclaration(node->GetChild(0), false);
+		if (result != crSuccess)
+			return result;
+
+		unsigned int iter = _currentSub->GetLastLocalId();
+		unsigned int iterIdx = _currentSub->AddNewAnonymousLocal(dtInteger);
+
+		addCodeInstructionWithInt(opPushInt, 0);
+		addCodeInstruction(opSetLocal, iterIdx);
+
+		result = compileForEachArray(node->GetChild(1));
+		if (result != crSuccess)
+			return result;
+
+		unsigned int arr = _currentSub->GetLastLocalId();
+		unsigned int cycleBegin = _currentSub->GetBytecode()->InstructionCount();
+
+		addCodeInstruction(opGetLocal, iterIdx);
+		addCodeInstruction(opGetLocal, arr);
+		addCodeInstruction(opGetNextElement);
+		addCodeInstruction(opSetLocal, iterIdx);
+		addCodeInstruction(opGetLocal, iterIdx);
+		addCodeInstruction(opArraySize, arr);
+		addCodeInstruction(opGreaterOrEqual);
+		
+		unsigned int jumpIdx = _currentSub->GetBytecode()->InstructionCount();
+		addCodeInstruction(opJumpNotZero);
+		addCodeInstruction(opSetLocal, iter);
+
+		result = compilePostConditionalStatements(node->GetChild(2));
+		if (result != crSuccess)
+			return result;
+
+		addCodeInstruction(opGoto, cycleBegin);
+		setGotoIndexToInstruction(jumpIdx);
+
+		return crSuccess;
+	}
+
+	CompileResult Compiler::compileForEachArray(TreeNode *node)
+	{
+		unsigned int id = _currentSub->AddNewAnonymousLocal(dtArray);
+
+		if (node->GetType() == ntArrayInitList)
+			return compileArrayInitializationList(node, id);
+
+		CompileResult result = compileExpression(node, true);
+		if (result != crSuccess)
+			return result;
+
+		addCodeInstruction(opSetLocal, id);
+
 		return crSuccess;
 	}
 

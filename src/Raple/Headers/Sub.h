@@ -67,6 +67,11 @@ namespace Raple
 			return _locals.size(); 
 		}
 		
+		unsigned int GetLastLocalId() const
+		{
+			return _locals.size()-1;
+		}
+
 		unsigned int AddNewLocal(const rstring &name, DataType dataType = dtNull)
 		{
 			int lastIndex = GetLocalsCount();
