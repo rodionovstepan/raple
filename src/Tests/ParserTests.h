@@ -554,7 +554,7 @@ namespace RapleTests
 
 		void CorrectlyParseForEach()
 		{
-			SourceCode code("sub main(){ foreach(x in {1,2,3}) {} }");
+			SourceCode code("sub main(){ foreach(var x in {1,2,3}) {} }");
 
 			TreeNode *root = _parser->ParseScript(&code);
 			TreeNode *body = root->GetChild(TreeIndexCode)->GetChild(TreeIndexSubBody);

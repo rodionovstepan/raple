@@ -911,7 +911,7 @@ namespace Raple
 			return node;
 		}
 
-		node->AddChild(parseVarDeclaration(false, false));
+		node->AddChild(parseVarDeclaration(true, false));
 
 		getNextToken(&t);
 		if (t.Type != ttIn)
