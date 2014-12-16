@@ -1,269 +1,234 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="src">
+      <UniqueIdentifier>{2621b6a8-2c77-4855-8781-2f6b0f8e5c71}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    <Filter Include="src\syntax">
+      <UniqueIdentifier>{dfad668b-688d-45e3-8aea-324ca05604e0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="src\compiler">
+      <UniqueIdentifier>{54c0e3fc-cfca-4944-8ad2-041bf0bf9db8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Lexical">
-      <UniqueIdentifier>{2850c34a-1e8b-40fd-b1e8-a1fc24d0722d}</UniqueIdentifier>
+    <Filter Include="src\vm">
+      <UniqueIdentifier>{76c9d278-e096-448b-9cc9-7d138457ab89}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Lexical">
-      <UniqueIdentifier>{288ee1a7-35bc-4566-8e77-d6dcc431d89e}</UniqueIdentifier>
+    <Filter Include="src\core">
+      <UniqueIdentifier>{16a39384-eab4-4ee4-9df7-c02ca96827d9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Log">
-      <UniqueIdentifier>{359dda3b-b4a6-435a-a871-55125269db92}</UniqueIdentifier>
+    <Filter Include="src\libs">
+      <UniqueIdentifier>{2879fefc-c105-4884-a41d-07129449d121}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Log">
-      <UniqueIdentifier>{66b6db85-d41c-4f93-a62b-92a7b7688e7b}</UniqueIdentifier>
+    <Filter Include="src\log">
+      <UniqueIdentifier>{d7679eee-22b5-4a01-be76-adba809d0616}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Core">
-      <UniqueIdentifier>{b272741c-22a0-48e9-9958-ea537afb1291}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Core">
-      <UniqueIdentifier>{f0217037-5d6c-4cb6-b8c9-5331f5fd9794}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Syntax">
-      <UniqueIdentifier>{1261cea2-b166-43b9-9183-12f98c84159f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Syntax">
-      <UniqueIdentifier>{2fff1be5-6d99-40f7-9848-3b45a76c53c3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\VM">
-      <UniqueIdentifier>{26aa6cb3-1683-408c-8aa9-bbf8b6aec40d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\VM">
-      <UniqueIdentifier>{36659a58-370d-47d7-880f-d6ebc9d20607}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Libs">
-      <UniqueIdentifier>{cdee73d2-7f52-4a5b-91fb-2ddc13a1751d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Libs">
-      <UniqueIdentifier>{ea386fb6-648f-4ca6-90c7-51f9bdd8b4f4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\External">
-      <UniqueIdentifier>{7fb0a561-df84-4abe-a225-cbb58272bd8b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Raple code examples">
+    <Filter Include="examples">
       <UniqueIdentifier>{dceb2b39-fb86-4573-9234-92d3802e7e8c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{23ff9899-f030-4c30-a70f-1654a99ce85b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Tokenizer.cpp">
-      <Filter>Source Files\Lexical</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\ConsoleLogger.cpp">
-      <Filter>Source Files\Log</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\FileLogger.cpp">
-      <Filter>Source Files\Log</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\String.cpp">
-      <Filter>Source Files\Core</Filter>
+    <ClCompile Include="Sources\Parser.cpp">
+      <Filter>src\syntax</Filter>
     </ClCompile>
     <ClCompile Include="Sources\TreeNode.cpp">
-      <Filter>Source Files\Syntax</Filter>
+      <Filter>src\syntax</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\Parser.cpp">
-      <Filter>Source Files\Syntax</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Bytecode.cpp">
-      <Filter>Source Files\VM</Filter>
+    <ClCompile Include="Sources\Tokenizer.cpp">
+      <Filter>src\syntax</Filter>
     </ClCompile>
     <ClCompile Include="Sources\Compiler.cpp">
-      <Filter>Source Files\VM</Filter>
+      <Filter>src\compiler</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\SourceCode.cpp">
-      <Filter>Source Files\Core</Filter>
+    <ClCompile Include="Sources\Bytecode.cpp">
+      <Filter>src\compiler</Filter>
     </ClCompile>
     <ClCompile Include="Sources\RuntimeEnvironment.cpp">
-      <Filter>Source Files\VM</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\RapleEngine.cpp">
-      <Filter>Source Files\Core</Filter>
+      <Filter>src\vm</Filter>
     </ClCompile>
     <ClCompile Include="Sources\Var.cpp">
-      <Filter>Source Files\VM</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\HashArray.cpp">
-      <Filter>Source Files\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\FileSourceCodeProvider.cpp">
-      <Filter>Source Files\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\InternalFunctionsLibrary.cpp">
-      <Filter>Source Files\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\StaticCgiLibrary.cpp">
-      <Filter>Source Files\Libs</Filter>
+      <Filter>src\vm</Filter>
     </ClCompile>
     <ClCompile Include="Sources\StaticIoLibrary.cpp">
-      <Filter>Source Files\Libs</Filter>
+      <Filter>src\libs</Filter>
     </ClCompile>
+    <ClCompile Include="Sources\ConsoleLogger.cpp">
+      <Filter>src\log</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\FileLogger.cpp">
+      <Filter>src\log</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\FileSourceCodeProvider.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\HashArray.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\InternalFunctionsLibrary.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\RapleEngine.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\SourceCode.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\String.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Headers\TokenDefinition.h">
-      <Filter>Header Files\Lexical</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\ITokenizer.h">
-      <Filter>Header Files\Lexical</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Tokenizer.h">
-      <Filter>Header Files\Lexical</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\ILogger.h">
-      <Filter>Header Files\Log</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\ConsoleLogger.h">
-      <Filter>Header Files\Log</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\FileLogger.h">
-      <Filter>Header Files\Log</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\String.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\TreeNode.h">
-      <Filter>Header Files\Syntax</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Token.h">
-      <Filter>Header Files\Lexical</Filter>
+    <ClInclude Include="Headers\IParser.h">
+      <Filter>src\syntax</Filter>
     </ClInclude>
     <ClInclude Include="Headers\NodeDefinition.h">
-      <Filter>Header Files\Syntax</Filter>
+      <Filter>src\syntax</Filter>
     </ClInclude>
     <ClInclude Include="Headers\Parser.h">
-      <Filter>Header Files\Syntax</Filter>
+      <Filter>src\syntax</Filter>
     </ClInclude>
     <ClInclude Include="Headers\ParserBase.h">
-      <Filter>Header Files\Syntax</Filter>
+      <Filter>src\syntax</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Bytecode.h">
-      <Filter>Header Files\VM</Filter>
+    <ClInclude Include="Headers\TreeNode.h">
+      <Filter>src\syntax</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Instruction.h">
-      <Filter>Header Files\VM</Filter>
+    <ClInclude Include="Headers\ITokenizer.h">
+      <Filter>src\syntax</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Opcode.h">
-      <Filter>Header Files\VM</Filter>
+    <ClInclude Include="Headers\Token.h">
+      <Filter>src\syntax</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\IRuntimeEnvironment.h">
-      <Filter>Header Files\VM</Filter>
+    <ClInclude Include="Headers\TokenDefinition.h">
+      <Filter>src\syntax</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\RuntimeEnvironment.h">
-      <Filter>Header Files\VM</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\ICompiler.h">
-      <Filter>Header Files\VM</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\IVirtualMachine.h">
-      <Filter>Header Files\VM</Filter>
+    <ClInclude Include="Headers\Tokenizer.h">
+      <Filter>src\syntax</Filter>
     </ClInclude>
     <ClInclude Include="Headers\Compiler.h">
-      <Filter>Header Files\VM</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\SourceCode.h">
-      <Filter>Header Files\Core</Filter>
+      <Filter>src\compiler</Filter>
     </ClInclude>
     <ClInclude Include="Headers\CompileResult.h">
-      <Filter>Header Files\VM</Filter>
+      <Filter>src\compiler</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Sub.h">
-      <Filter>Header Files\VM</Filter>
+    <ClInclude Include="Headers\ICompiler.h">
+      <Filter>src\compiler</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Constants.h">
-      <Filter>Header Files\Core</Filter>
+    <ClInclude Include="Headers\Bytecode.h">
+      <Filter>src\compiler</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\System.h">
-      <Filter>Header Files\Core</Filter>
+    <ClInclude Include="Headers\Opcode.h">
+      <Filter>src\compiler</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\VirtualMachine.h">
-      <Filter>Header Files\VM</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\VirtualMachine.cpp">
-      <Filter>Source Files\VM</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\VirtualMachineResult.h">
-      <Filter>Header Files\VM</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\IRapleEngine.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\RapleEngine.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\IParser.h">
-      <Filter>Header Files\Syntax</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Convert.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\ILibrary.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\Stack.h">
-      <Filter>Header Files\Core</Filter>
+    <ClInclude Include="Headers\Instruction.h">
+      <Filter>src\compiler</Filter>
     </ClInclude>
     <ClInclude Include="Headers\CallStackFrame.h">
-      <Filter>Header Files\VM</Filter>
+      <Filter>src\vm</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\StdLibrary.h">
-      <Filter>Header Files\Libs</Filter>
+    <ClInclude Include="Headers\IRuntimeEnvironment.h">
+      <Filter>src\vm</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\IVirtualMachine.h">
+      <Filter>src\vm</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\RuntimeEnvironment.h">
+      <Filter>src\vm</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Sub.h">
+      <Filter>src\vm</Filter>
     </ClInclude>
     <ClInclude Include="Headers\Var.h">
-      <Filter>Header Files\VM</Filter>
+      <Filter>src\vm</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\HashArray.h">
-      <Filter>Header Files\Core</Filter>
+    <ClInclude Include="Headers\VirtualMachine.h">
+      <Filter>src\vm</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\HashArrayEntry.h">
-      <Filter>Header Files\Core</Filter>
+    <ClInclude Include="Headers\VirtualMachineResult.h">
+      <Filter>src\vm</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\ISourceCodeProvider.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\FileSourceCodeProvider.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\StringsLibrary.h">
-      <Filter>Header Files\Libs</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\InternalFunctionsLibrary.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\IStaticLibrary.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\StaticMathLibrary.h">
-      <Filter>Header Files\Libs</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\StaticLibraryBase.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\StaticCgiLibrary.h">
-      <Filter>Header Files\Libs</Filter>
+    <ClInclude Include="Sources\VirtualMachine.cpp">
+      <Filter>src\vm</Filter>
     </ClInclude>
     <ClInclude Include="Headers\StaticIoLibrary.h">
-      <Filter>Header Files\Libs</Filter>
+      <Filter>src\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\StaticMathLibrary.h">
+      <Filter>src\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\StdLibrary.h">
+      <Filter>src\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\StringsLibrary.h">
+      <Filter>src\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\ConsoleLogger.h">
+      <Filter>src\log</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\FileLogger.h">
+      <Filter>src\log</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\ILogger.h">
+      <Filter>src\log</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Constants.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Convert.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\FileSourceCodeProvider.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\HashArray.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\HashArrayEntry.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\ILibrary.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\InternalFunctionsLibrary.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\IRapleEngine.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\ISourceCodeProvider.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\IStaticLibrary.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\RapleEngine.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\SourceCode.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Stack.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\StaticLibraryBase.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\String.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\System.h">
+      <Filter>src\core</Filter>
     </ClInclude>
     <ClInclude Include="Headers\tinydir.h">
-      <Filter>Header Files\External</Filter>
+      <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Examples\sort.r">
-      <Filter>Raple code examples</Filter>
+      <Filter>examples</Filter>
     </None>
   </ItemGroup>
 </Project>

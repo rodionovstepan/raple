@@ -83,7 +83,6 @@
     <ClCompile Include="Sources\Bytecode.cpp" />
     <ClCompile Include="Sources\Compiler.cpp" />
     <ClCompile Include="Sources\ConsoleLogger.cpp" />
-    <ClCompile Include="Sources\StaticCgiLibrary.cpp" />
     <ClCompile Include="Sources\StaticIoLibrary.cpp" />
     <ClCompile Include="Sources\Var.cpp" />
     <ClCompile Include="Sources\FileLogger.cpp" />
@@ -104,7 +103,6 @@
     <ClInclude Include="Headers\StaticMathLibrary.h" />
     <ClInclude Include="Headers\tinydir.h" />
     <ClInclude Include="Sources\VirtualMachine.cpp" />
-    <ClInclude Include="Headers\StaticCgiLibrary.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Bytecode.h" />
