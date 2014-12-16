@@ -26,6 +26,7 @@ namespace RapleTests
 			addTest(HashArrayTests::Test1);
 			addTest(HashArrayTests::Test2);
 			addTest(HashArrayTests::Test3);
+			addTest(HashArrayTests::ForEachTest1);
 		}
 
 	private:
@@ -83,6 +84,30 @@ namespace RapleTests
 			array.Set(&key1, &val2);
 
 			assertEquals(1, array.ItemCount());
+		}
+
+		void ForEachTest1()
+		{
+			Var k1, v1, k2, v2;
+			k1.Int(0);
+			v1.Int(1);
+			k2.Int(1);
+			v2.Int(2);
+
+			HashArray array;
+			array.Set(&k1, &v1);
+			array.Set(&k2, &v2);
+
+			size_t size = array.Size(),
+				count = array.ItemCount(),
+				i = 0, j = 0;
+
+			for (; i < size && j < count; ++i) 
+			{
+				if (array.GetByIndex(i)->GetKey() != 0) ++j;
+			}
+
+			assertEquals(2, j);
 		}
 	};
 }

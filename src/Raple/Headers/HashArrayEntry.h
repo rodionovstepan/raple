@@ -52,11 +52,6 @@ namespace Raple
 			return _next;
 		}
 
-		void AddNext(HashArrayEntry *entry)
-		{
-			_next = entry;
-		}
-
 		void SetKey(Var *key)
 		{
 			if (_key != 0)
