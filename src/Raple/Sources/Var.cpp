@@ -30,6 +30,9 @@ namespace Raple
 		case dtFloat:
 			_float = 0.f;
 			break;
+		case dtArray:
+			_array = new HashArray();
+			break;
 		}
 	}
 
