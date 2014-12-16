@@ -123,12 +123,20 @@ namespace Raple
 				result = executeNewArray(instr->Argument());
 				break;
 
+			case opArraySize:
+				result = executeArraySize(instr->Argument());
+				break;
+
 			case opSetElement:
 				result = executeSetElement();
 				break;
 
 			case opGetElement:
 				result = executeGetElement();
+				break;
+
+			case opGetNextElement:
+				result = executeGetNextElement();
 				break;
 
 			default:
@@ -598,36 +606,45 @@ namespace Raple
 		Var *value = array->Array()->Get(key);
 		if (value == 0)
 			PushNull();
-		else
+		else if (!PushVal(value))
+			return vmrUnknownDataType;
+
+		return vmrSuccess;
+	}
+
+	inline VirtualMachineResult VirtualMachine::executeGetNextElement()
+	{
+		checkPop(2);
+		Var *val = Pop();
+		Var *idx = Pop();
+		
+		RapleAssert(val != 0 && idx != 0 && val->GetDataType() == dtArray && idx->GetDataType() == dtInteger);
+
+		HashArray *arr = val->Array();
+		unsigned int n = arr->Size();
+		unsigned int index = idx->Int();
+
+		if (index >= n)
 		{
-			switch (value->GetDataType())
+			PushNull();
+			PushInt(n);
+			return vmrSuccess;
+		}
+
+		for (unsigned int i = index+1; i < n; ++i)
+		{
+			if (arr->GetByIndex(i)->GetKey() != 0)
 			{
-			case dtInteger:
-				PushInt(value->Int());
-				break;
+				if (!PushVal(arr->GetByIndex(i)->GetValue()))
+					return vmrUnknownDataType;
 
-			case dtFloat:
-				PushFloat(value->Float());
-				break;
-
-			case dtString:
-				PushString(*(value->String()));
-				break;
-
-			case dtArray:
-				PushArrayPointer(value->Array());
-				break;
-
-			case dtNull:
-				PushNull();
-				break;
-
-			default:
-				logUnknownDatatype(value->GetDataType());
-				return vmrUnknownDataType;
+				PushInt(i);
+				return vmrSuccess;
 			}
 		}
 
+		PushNull();
+		PushInt(n);
 		return vmrSuccess;
 	}
 
@@ -665,6 +682,15 @@ namespace Raple
 		RapleAssert(local != 0);
 
 		local->CreateArray();
+		return vmrSuccess;
+	}
+
+	inline VirtualMachineResult VirtualMachine::executeArraySize(unsigned int argument)
+	{
+		Var *local = _runningSub->GetLocal(argument);
+		RapleAssert(local != 0 && local->GetDataType() == dtArray);
+
+		PushInt(local->Array()->ItemCount());
 		return vmrSuccess;
 	}
 

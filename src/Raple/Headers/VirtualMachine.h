@@ -73,6 +73,38 @@ namespace Raple
 			RapleAssert(stackDistance() < Constants::StackSize);
 			(_stackptr++)->Null();
 		}
+
+		bool PushVal(Var *v)
+		{
+			switch (v->GetDataType())
+			{
+			case dtInteger:
+				PushInt(v->Int());
+				break;
+
+			case dtFloat:
+				PushFloat(v->Float());
+				break;
+
+			case dtString:
+				PushString(*(v->String()));
+				break;
+
+			case dtArray:
+				PushArrayPointer(v->Array());
+				break;
+
+			case dtNull:
+				PushNull();
+				break;
+
+			default:
+				logUnknownDatatype(v->GetDataType());
+				return false;
+			}
+
+			return true;
+		}
 		
 	private:
 
@@ -124,7 +156,9 @@ namespace Raple
 		inline VirtualMachineResult executeNewArray(unsigned int argument);
 		inline VirtualMachineResult executeSetElement();
 		inline VirtualMachineResult executeGetElement();
+		inline VirtualMachineResult executeGetNextElement();
 		inline VirtualMachineResult executeLogicOp(Opcode opcode);
+		inline VirtualMachineResult executeArraySize(unsigned int argument);
 	};
 }
 
