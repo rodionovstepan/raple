@@ -42,6 +42,23 @@ namespace Raple
 		}
 	}
 
+	HashArray *HashArray::Clone()
+	{
+		HashArray *array = new HashArray();
+		array->_size = _size;
+		array->_itemCount = _itemCount;
+		array->_items = new HashArrayEntry[array->_size];
+		array->_firstFreeItem = array->_items + array->_size - 1;
+
+		for (unsigned int i = 0; i < array->_size; ++i)
+		{
+			if (_items[i].GetKey() != 0)
+				array->_items[i] = *_items[i].Clone();
+		}
+
+		return array;
+	}
+
 	Var *HashArray::Get(Var *key)
 	{
 		if (_size == 0)

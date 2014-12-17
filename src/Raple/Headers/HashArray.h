@@ -23,6 +23,7 @@ namespace Raple
 		HashArray();
 		~HashArray();
 
+		HashArray *Clone();
 		Var *Get(Var *key);
 		void Set(Var *key, Var *value);
 		void Add(Var *value);

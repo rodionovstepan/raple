@@ -14,6 +14,7 @@ namespace Raple
 	{
 		_dataType = dtNull;
 		_isReference = false;
+		_isArg = false;
 	}
 
 	Var::Var(const rstring &name, DataType dataType)
@@ -21,6 +22,10 @@ namespace Raple
 		_name = name;
 		_dataType = dataType;
 		_isReference = false;
+		_isArg = false;
+
+		if (dataType == dtCallArgument)
+			_isArg = true;
 
 		switch (dataType)
 		{
@@ -50,6 +55,14 @@ namespace Raple
 				delete _array;
 
 		_dataType = dtNull;
+	}
+
+	void Var::Arg()
+	{
+		clearDynamicData();
+
+		_dataType = dtCallArgument;
+		_isReference = false;
 	}
 
 	void Var::Null()
@@ -135,7 +148,7 @@ namespace Raple
 			_string = otherVar->_string->Clone();
 			break;
 		case dtArray:
-			_array = otherVar->_array;
+			_array = otherVar->_array->Clone();
 			break;
 		case dtCallArgument:
 			_int = otherVar->_int;

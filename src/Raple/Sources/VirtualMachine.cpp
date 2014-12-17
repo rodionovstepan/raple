@@ -31,6 +31,14 @@ namespace Raple
 		return _environment;
 	}
 
+	void VirtualMachine::dumpStack()
+	{
+		Opcode op = _runningSub->GetBytecode()->GetInstruction(_pointer-1)->GetOpcode();
+		rstring sub = _runningSub->GetName();
+		
+		printf("%s:\t%s: stack size = %d\n", sub.GetBuffer(), GetOpcodeDefinition(op), _stackptr - _stackbase);
+	}
+
 	VirtualMachineResult VirtualMachine::Execute(Sub *sub)
 	{
 		if (_environment == 0 || _logger == 0)
@@ -42,6 +50,8 @@ namespace Raple
 		for (;;)
 		{
 			const Instruction *instr = _runningSub->GetBytecode()->GetInstruction(_pointer++);
+
+			//dumpStack();
 
 			switch (instr->GetOpcode())
 			{
@@ -397,42 +407,7 @@ namespace Raple
 		Var *local = _runningSub->GetLocal(argument);
 		RapleAssert(local != 0);
 
-		Var *frame = Pop();
-		DataType type = frame->GetDataType();
-
-		VirtualMachineResult result = vmrSuccess;
-
-		switch (type)
-		{
-		case dtInteger:
-			local->Int(frame->Int());
-			break;
-
-		case dtFloat:
-			local->Float(frame->Float());
-			break;
-
-		case dtString:
-			local->String(*(frame->String()));
-			break;
-
-		case dtArray:
-			local->Array(frame->Array());
-			break;
-
-		case dtFunction:
-			local->Function(frame->Int());
-			break;
-
-		case dtNull:
-			local->Null();
-			break;
-
-		default:
-			logUnknownDatatype(type);
-			return vmrUnknownStackFrameType;
-		}
-
+		local->CopyFrom(Pop());
 		return vmrSuccess;
 	}
 
@@ -773,7 +748,8 @@ namespace Raple
 			else
 				_stackbase->Null();
 		}
-		
+
+		_runningSub->Return();
 		_stackptr = _callstackptr->Stackptr + (_callstackptr->ReturnValueExpected ? 1 : 0);
 		_stackbase = _callstackptr->Stackbase;
 		_runningSub = _callstackptr->Sub;

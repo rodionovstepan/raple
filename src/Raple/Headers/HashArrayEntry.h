@@ -74,6 +74,15 @@ namespace Raple
 		{
 			_next = next;
 		}
+
+		HashArrayEntry *Clone()
+		{
+			HashArrayEntry *entry = new HashArrayEntry();
+			entry->_key = Var::From(_key);
+			entry->_value = Var::From(_value);
+			entry->_next = _next;
+			return entry;
+		}
 	};
 }
 

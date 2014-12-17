@@ -75,9 +75,12 @@ namespace Raple
 
 			return _float; 
 		}
+
 		rstring *String() const { return _string; }
 		HashArray *Array() const { return _array; }
 		void CreateArray();
+		void Arg();
+		bool IsArg() const { return _isArg; }
 
 		const rstring &GetName() const { return _name; }
 		DataType GetDataType() const { return _dataType; }
@@ -125,6 +128,7 @@ namespace Raple
 		rstring _name;
 		DataType _dataType;
 		bool _isReference;
+		bool _isArg;
 
 		inline void clearDynamicData();
 
@@ -162,6 +166,13 @@ namespace Raple
 		{
 			Var *var = new Var();
 			var->Array(array);
+			return var;
+		}
+
+		static Var *From(Var *otherVar)
+		{
+			Var *var = new Var();
+			var->CopyFrom(otherVar);
 			return var;
 		}
 	};
