@@ -74,17 +74,17 @@ namespace Raple
 
 	private:
 
-		void addCodeInstruction(Opcode opcode, unsigned int arg = 0);
-		void addCodeInstructionWithInt(Opcode opcode, int intValue, unsigned int arg = 0);
-		void addCodeInstructionWithFloat(Opcode opcode, float floatValue, unsigned int arg = 0);
-		void addCodeInstructionWithString(Opcode opcode, rstring *string, unsigned int arg = 0);
+		void addCode(Opcode opcode, unsigned int arg = 0);
+		void addCodeWithInt(Opcode opcode, int intValue, unsigned int arg = 0);
+		void addCodeWithFloat(Opcode opcode, float floatValue, unsigned int arg = 0);
+		void addCodeWithString(Opcode opcode, rstring *string, unsigned int arg = 0);
 		void addCodePushIntConstant(TreeNode *node);
 		void addCodePushFloatConstant(TreeNode *node);
 		void addCodePushStringConstant(TreeNode *node);
-		rstring extractStringFromNode(TreeNode *node);
+		rstring getNodeString(TreeNode *node);
 		unsigned int getHashFromNode(TreeNode *node);
 
-		int getLocalIdentificatorByToken(Token *token);
+		int getLocalId(Token *token);
 	};
 }
 

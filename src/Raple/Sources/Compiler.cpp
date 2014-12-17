@@ -87,7 +87,7 @@ namespace Raple
 
 	CompileResult Compiler::compileImport(TreeNode *importNode)
 	{
-		rstring libname = extractStringFromNode(importNode->GetChild(Constants::TreeIndexImportLibName));
+		rstring libname = getNodeString(importNode->GetChild(Constants::TreeIndexImportLibName));
 
 		if (!_environment->IsLibraryExists(libname))
 		{
@@ -101,7 +101,7 @@ namespace Raple
 
 	CompileResult Compiler::compileSub(TreeNode *subNode)
 	{
-		rstring subName = extractStringFromNode(subNode->GetChild(Constants::TreeIndexSubName));
+		rstring subName = getNodeString(subNode->GetChild(Constants::TreeIndexSubName));
 
 		int subIndex = _environment->AddSub(subName);
 		_currentSub = _environment->GetSub(subIndex);
@@ -112,14 +112,14 @@ namespace Raple
 		_currentSub->SetArgumentsCount(argumentCount);
 
 		for (int i = 0; i < argumentCount; ++i)
-			_currentSub->AddNewLocal(extractStringFromNode(argsNode->GetChild(i)), dtCallArgument);
+			_currentSub->AddNewLocal(getNodeString(argsNode->GetChild(i)), dtCallArgument);
 
 		CompileResult result = compileSubStatements(subNode->GetChild(Constants::TreeIndexSubBody));
 
 		if (result != crSuccess)
 			return result;
 
-		addCodeInstruction(opRet);
+		addCode(opRet);
 		return crSuccess;
 	}
 
@@ -134,7 +134,7 @@ namespace Raple
 		sub->SetArgumentsCount(argumentCount);
 
 		for (int i = 0; i < argumentCount; ++i)
-			sub->AddNewLocal(extractStringFromNode(argsNode->GetChild(i)), dtCallArgument);
+			sub->AddNewLocal(getNodeString(argsNode->GetChild(i)), dtCallArgument);
 
 		Sub *ownerSub = _currentSub;
 		_currentSub = sub;
@@ -147,7 +147,7 @@ namespace Raple
 
 		sub->GetBytecode()->AddInstruction(opRet);
 
-		addCodeInstruction(opGetSub, subid);
+		addCode(opGetSub, subid);
 
 		return crSuccess;
 	}
@@ -191,7 +191,7 @@ namespace Raple
 		if (returnExpessions > 0)
 			result = compileExpression(returnNode->GetChild(0));
 
-		addCodeInstruction(opRet, returnExpessions);
+		addCode(opRet, returnExpessions);
 
 		return result;
 	}
@@ -287,11 +287,11 @@ namespace Raple
 			break;
 
 		case ttTrue:
-			addCodeInstructionWithInt(Raple::opPushInt, 1);
+			addCodeWithInt(Raple::opPushInt, 1);
 			break;
 
 		case ttFalse:
-			addCodeInstructionWithInt(Raple::opPushInt, 0);
+			addCodeWithInt(Raple::opPushInt, 0);
 			break;
 
 		default:
@@ -324,47 +324,47 @@ namespace Raple
 		switch (tt)
 		{
 		case ttPlus:
-			addCodeInstruction(opAdd);
+			addCode(opAdd);
 			break;
 
 		case ttStar:
-			addCodeInstruction(opProd);
+			addCode(opProd);
 			break;
 
 		case ttMinus:
-			addCodeInstruction(opSub);
+			addCode(opSub);
 			break;
 
 		case ttSlash:
-			addCodeInstruction(opDiv);
+			addCode(opDiv);
 			break;
 
 		case ttExponentiation:
-			addCodeInstruction(opExp);
+			addCode(opExp);
 			break;
 
 		case ttEqual:
-			addCodeInstruction(opEqual);
+			addCode(opEqual);
 			break;
 
 		case ttNotEqual:
-			addCodeInstruction(opNotEqual);
+			addCode(opNotEqual);
 			break;
 
 		case ttGreater:
-			addCodeInstruction(opGreater);
+			addCode(opGreater);
 			break;
 
 		case ttLower:
-			addCodeInstruction(opLess);
+			addCode(opLess);
 			break;
 
 		case ttGreaterEqual:
-			addCodeInstruction(opGreaterOrEqual);
+			addCode(opGreaterOrEqual);
 			break;
 
 		case ttLowerEqual:
-			addCodeInstruction(opLessOrEqual);
+			addCode(opLessOrEqual);
 			break;
 
 		default:
@@ -390,9 +390,9 @@ namespace Raple
 
 		TokenType type = logicalOperatorNode->GetToken()->Type;
 		if (type == ttAnd)
-			addCodeInstruction(opLogicAnd);
+			addCode(opLogicAnd);
 		else if (type == ttOr)
-			addCodeInstruction(opLogicOr);
+			addCode(opLogicOr);
 		else
 		{
 			_logger->Error(Constants::LogTitleCompilerError, "Unknown logic operator", logicalOperatorNode->GetToken()->Row);
@@ -422,15 +422,15 @@ namespace Raple
 		switch (unaryOperatorNode->GetToken()->Type)
 		{
 		case ttMinus:
-			addCodeInstruction(opNeg);
+			addCode(opNeg);
 			break;
 		
 		case ttIncrement:
-			addCodeInstruction(opPreInc);
+			addCode(opPreInc);
 			break;
 
 		case ttDecrement:
-			addCodeInstruction(opPreDec);
+			addCode(opPreDec);
 			break;
 
 		default:
@@ -460,16 +460,16 @@ namespace Raple
 		if (result != crSuccess)
 			return result;
 
-		int id = getLocalIdentificatorByToken(node->GetToken());
+		int id = getLocalId(node->GetToken());
 		
 		switch (postOperatorNode->GetToken()->Type)
 		{
 		case ttIncrement:
-			addCodeInstruction(opPostInc, id);
+			addCode(opPostInc, id);
 			break;
 
 		case ttDecrement:
-			addCodeInstruction(opPostDec, id);
+			addCode(opPostDec, id);
 			break;
 
 		default:
@@ -486,7 +486,7 @@ namespace Raple
 	{
 		bool isGlobalCall = callNode->GetChild(Constants::TreeIndexFunctionCallArguments)->GetType() == ntFunctionCallArgList;
 		TreeNode *typeNode = callNode->GetChild(Constants::TreeIndexFunctionCallName);
-		rstring identifier = extractStringFromNode(typeNode);
+		rstring identifier = getNodeString(typeNode);
 		
 		if (isGlobalCall)	// global call; e.g., println(foo);
 			return compileGlobalFunctionCall(callNode, identifier, expectReturnValue);
@@ -519,7 +519,7 @@ namespace Raple
 
 		compileFunctionCallArgumentList(secondCall->GetChild(Constants::TreeIndexFunctionCallArguments), 0, false);
 
-		addCodeInstructionWithInt(opInternalCall, expectReturnValue, internalHash);
+		addCodeWithInt(opInternalCall, expectReturnValue, internalHash);
 
 		return crSuccess;
 	}
@@ -543,8 +543,8 @@ namespace Raple
 			if (result != crSuccess)
 				return result;
 
-			addCodeInstruction(opGetLocal, id);
-			addCodeInstructionWithInt(opDynamicCall, expectReturnValue);
+			addCode(opGetLocal, id);
+			addCodeWithInt(opDynamicCall, expectReturnValue);
 			return crSuccess;
 		}
 
@@ -553,7 +553,7 @@ namespace Raple
 		if (result != crSuccess)
 			return result;
 
-		addCodeInstructionWithInt(opCall, expectReturnValue, id);
+		addCodeWithInt(opCall, expectReturnValue, id);
 
 		return crSuccess;
 	}
@@ -565,8 +565,8 @@ namespace Raple
 		if (result != crSuccess)
 			return result;
 		
-		addCodeInstruction(opGetLocal, localId);
-		addCodeInstructionWithInt(opInternalCall, expectReturnValue, internalHash);
+		addCode(opGetLocal, localId);
+		addCodeWithInt(opInternalCall, expectReturnValue, internalHash);
 
 		return crSuccess;
 	}
@@ -578,8 +578,8 @@ namespace Raple
 		if (result != crSuccess)
 			return result;
 
-		addCodeInstructionWithInt(opPushInt, libraryId);
-		addCodeInstructionWithInt(opStaticCall, expectReturnValue, staticLibSubHash);
+		addCodeWithInt(opPushInt, libraryId);
+		addCodeWithInt(opStaticCall, expectReturnValue, staticLibSubHash);
 
 		return crSuccess;
 	}
@@ -615,20 +615,20 @@ namespace Raple
 		if (result != crSuccess)
 			return result;
 
-		//! бля, не нравится мне такое решение!
-		//! приходится два раза доставать строку по данным из токена
+		//! bad solution
+		//! two times getLocalId called
 		if (argumentNode->GetType() == ntAssignment)
 		{
 			Token *token = argumentNode->GetChild(0)->GetToken();
 
-			int id = getLocalIdentificatorByToken(token);
+			int id = getLocalId(token);
 			if (id == Constants::SubUnknownLocalId)
 			{
 				_logger->Error(Constants::LogTitleCompilerError, "Undeclared identifier", token->Row);
 				return crFailed;
 			}
 
-			addCodeInstruction(opGetLocal, id);
+			addCode(opGetLocal, id);
 		}
 
 		return crSuccess;
@@ -669,7 +669,7 @@ namespace Raple
 				return result;
 
 			if (!isArrayDeclaration)
-				addCodeInstruction(opSetLocal, id);
+				addCode(opSetLocal, id);
 		}
 
 		// multiple var declaration
@@ -683,14 +683,14 @@ namespace Raple
 
 	CompileResult Compiler::compileVarAccess(TreeNode *node)
 	{
-		int id = getLocalIdentificatorByToken(node->GetToken());
+		int id = getLocalId(node->GetToken());
 		if (id == Constants::SubUnknownLocalId)
 		{
 			_logger->Error(Constants::LogTitleCompilerError, "Undeclared identifier", node->GetToken()->Row);
 			return crFailed;
 		}
 
-		addCodeInstruction(opGetLocal, id);
+		addCode(opGetLocal, id);
 
 		return crSuccess;
 	}
@@ -707,14 +707,14 @@ namespace Raple
 		if (result != crSuccess)
 			return result;
 
-		int id = getLocalIdentificatorByToken(assignee->GetToken());
+		int id = getLocalId(assignee->GetToken());
 		if (id == Constants::SubUnknownLocalId)
 		{
 			_logger->Error(Constants::LogTitleCompilerError, "Undeclared identifier", assignee->GetToken()->Row);
 			return crFailed;
 		}
 
-		addCodeInstruction(opSetLocal, id);
+		addCode(opSetLocal, id);
 
 		return crSuccess;
 	}
@@ -734,15 +734,15 @@ namespace Raple
 			return result;
 
 		TreeNode *identifier = assignee->GetChild(Constants::TreeIndexArrayIndexingArray);
-		int id = getLocalIdentificatorByToken(identifier->GetToken());
+		int id = getLocalId(identifier->GetToken());
 		if (id == Constants::SubUnknownLocalId)
 		{
 			_logger->Error(Constants::LogTitleCompilerError, "Undeclared identifier", identifier->GetToken()->Row);
 			return crFailed;
 		}
 
-		addCodeInstruction(opGetLocal, id);
-		addCodeInstruction(opSetElement);
+		addCode(opGetLocal, id);
+		addCode(opSetElement);
 
 		return crSuccess;
 	}
@@ -756,7 +756,7 @@ namespace Raple
 			return result;
 
 		unsigned int gotoInstrIndex = _currentSub->GetBytecode()->InstructionCount();
-		addCodeInstruction(opJumpZero);
+		addCode(opJumpZero);
 
 		result = compilePostConditionalStatements(ifNode->GetChild(Constants::TreeIndexIfElseIfStatements));
 		if (result != crSuccess)
@@ -770,7 +770,7 @@ namespace Raple
 
 		unsigned int jumpToElseInstrIndex = _currentSub->GetBytecode()->InstructionCount();
 
-		addCodeInstruction(opGoto);
+		addCode(opGoto);
 		setGotoIndexToInstruction(gotoInstrIndex);
 
 		result = compilePostConditionalStatements(ifNode->GetChild(Constants::TreeIndexIfElseElseStatements));
@@ -793,13 +793,13 @@ namespace Raple
 			return result;
 
 		unsigned int gotoInstrIndex = _currentSub->GetBytecode()->InstructionCount();
-		addCodeInstruction(opJumpZero);
+		addCode(opJumpZero);
 
 		result = compilePostConditionalStatements(whileNode->GetChild(Constants::TreeIndexWhileStatements));
 		if (result != crSuccess)
 			return result;
 
-		addCodeInstruction(opGoto, conditionInstrIndex);
+		addCode(opGoto, conditionInstrIndex);
 		setGotoIndexToInstruction(gotoInstrIndex);
 		
 		return crSuccess;
@@ -817,8 +817,8 @@ namespace Raple
 
 		unsigned int iterIdx = _currentSub->AddNewAnonymousLocal(dtInteger);
 
-		addCodeInstructionWithInt(opPushInt, 0);
-		addCodeInstruction(opSetLocal, iterIdx);
+		addCodeWithInt(opPushInt, 0);
+		addCode(opSetLocal, iterIdx);
 
 		result = compileForEachArray(node->GetChild(1));
 		if (result != crSuccess)
@@ -827,25 +827,25 @@ namespace Raple
 		unsigned int arr = _currentSub->GetLastLocalId();
 		unsigned int cycleBegin = _currentSub->GetBytecode()->InstructionCount();
 
-		addCodeInstruction(opGetLocal, iterIdx);
-		addCodeInstruction(opGetLocal, arr);
-		addCodeInstruction(opGetNextElement);
-		addCodeInstructionWithInt(opPushInt, 1);
-		addCodeInstruction(opAdd);
-		addCodeInstruction(opSetLocal, iterIdx);
-		addCodeInstruction(opSetLocal, iter);
-		addCodeInstruction(opGetLocal, iterIdx);
-		addCodeInstruction(opArraySize, arr);
-		addCodeInstruction(opGreater);
+		addCode(opGetLocal, iterIdx);
+		addCode(opGetLocal, arr);
+		addCode(opGetNextElement);
+		addCodeWithInt(opPushInt, 1);
+		addCode(opAdd);
+		addCode(opSetLocal, iterIdx);
+		addCode(opSetLocal, iter);
+		addCode(opGetLocal, iterIdx);
+		addCode(opArraySize, arr);
+		addCode(opGreater);
 		
 		unsigned int jumpIdx = _currentSub->GetBytecode()->InstructionCount();
-		addCodeInstruction(opJumpNotZero);
+		addCode(opJumpNotZero);
 		
 		result = compilePostConditionalStatements(node->GetChild(2));
 		if (result != crSuccess)
 			return result;
 
-		addCodeInstruction(opGoto, cycleBegin);
+		addCode(opGoto, cycleBegin);
 		setGotoIndexToInstruction(jumpIdx);
 
 		return crSuccess;
@@ -862,7 +862,7 @@ namespace Raple
 		if (result != crSuccess)
 			return result;
 
-		addCodeInstruction(opSetLocal, id);
+		addCode(opSetLocal, id);
 
 		return crSuccess;
 	}
@@ -878,14 +878,14 @@ namespace Raple
 		TreeNode *subject = indexingNode->GetChild(Constants::TreeIndexArrayIndexingArray);
 		if (subject->GetType() == ntIdentifier)
 		{
-			int id = getLocalIdentificatorByToken(subject->GetToken());
+			int id = getLocalId(subject->GetToken());
 			if (id == Constants::SubUnknownLocalId)
 			{
 				_logger->Error(Constants::LogTitleCompilerError, "Undeclared identifier", subject->GetToken()->Row);
 				return crFailed;
 			}
 
-			addCodeInstruction(opGetLocal, id);
+			addCode(opGetLocal, id);
 		}
 		else if (subject->GetType() == ntFunctionCall)
 		{
@@ -900,13 +900,13 @@ namespace Raple
 				return result;
 		}
 
-		addCodeInstruction(opGetElement);
+		addCode(opGetElement);
 		return crSuccess;
 	}
 
 	CompileResult Compiler::compileArrayInitializationList(TreeNode *initlistNode, int arrayId)
 	{
-		addCodeInstruction(opNewArray, arrayId);
+		addCode(opNewArray, arrayId);
 
 		CompileResult result;
 		const int listCount = initlistNode->ChildCount();
@@ -917,11 +917,9 @@ namespace Raple
 			if (result != crSuccess)
 				return result;
 
-			// при инициализации массива ключом доступа к нему
-			// является его номер в списке инициализации
-			addCodeInstructionWithInt(opPushInt, i);
-			addCodeInstruction(opGetLocal, arrayId);
-			addCodeInstruction(opSetElement);
+			addCodeWithInt(opPushInt, i);
+			addCode(opGetLocal, arrayId);
+			addCode(opSetElement);
 		}
 
 		return crSuccess;
@@ -934,7 +932,7 @@ namespace Raple
 		if (result != crSuccess)
 			return result;
 
-		addCodeInstruction(opGetLocal, id);
+		addCode(opGetLocal, id);
 		return crSuccess;
 	}
 
@@ -956,15 +954,15 @@ namespace Raple
 
 	void Compiler::addCodePushIntConstant(TreeNode *node)
 	{
-		addCodeInstructionWithInt(opPushInt, extractStringFromNode(node).ToInt());
+		addCodeWithInt(opPushInt, getNodeString(node).ToInt());
 	}
 
 	void Compiler::addCodePushFloatConstant(TreeNode *node)
 	{
-		addCodeInstructionWithFloat(opPushFloat, extractStringFromNode(node).ToFloat());
+		addCodeWithFloat(opPushFloat, getNodeString(node).ToFloat());
 	}
 
-	rstring Compiler::extractStringFromNode(TreeNode *node)
+	rstring Compiler::getNodeString(TreeNode *node)
 	{
 		return _sourceCode->TakePart(node->GetToken()->Position, node->GetToken()->Length);
 	}
@@ -972,42 +970,42 @@ namespace Raple
 	void Compiler::addCodePushStringConstant(TreeNode *node)
 	{
 		Token *token = node->GetToken();		
-		addCodeInstructionWithString(opPushString, new rstring(_sourceCode->TakePart(token->Position, token->Length)));
+		addCodeWithString(opPushString, new rstring(_sourceCode->TakePart(token->Position, token->Length)));
 	}
 
-	void Compiler::addCodeInstruction(Opcode opcode, unsigned int arg)
+	void Compiler::addCode(Opcode opcode, unsigned int arg)
 	{
 		_currentSub->GetBytecode()->AddInstruction(new Instruction(opcode, arg));
 	}
 
-	void Compiler::addCodeInstructionWithInt(Opcode opcode, int intValue, unsigned int arg)
+	void Compiler::addCodeWithInt(Opcode opcode, int intValue, unsigned int arg)
 	{
 		Instruction *instruction = new Instruction(opcode, arg);
 		instruction->Int(intValue);
 		_currentSub->GetBytecode()->AddInstruction(instruction);
 	}
 
-	void Compiler::addCodeInstructionWithFloat(Opcode opcode, float floatValue, unsigned int arg)
+	void Compiler::addCodeWithFloat(Opcode opcode, float floatValue, unsigned int arg)
 	{
 		Instruction *instruction = new Instruction(opcode, arg);
 		instruction->Float(floatValue);
 		_currentSub->GetBytecode()->AddInstruction(instruction);
 	}
 
-	void Compiler::addCodeInstructionWithString(Opcode opcode, rstring *string, unsigned int arg)
+	void Compiler::addCodeWithString(Opcode opcode, rstring *string, unsigned int arg)
 	{
 		Instruction *instruction = new Instruction(opcode, arg);
 		instruction->String(string);
 		_currentSub->GetBytecode()->AddInstruction(instruction);
 	}
 
-	int Compiler::getLocalIdentificatorByToken(Token *token)
+	int Compiler::getLocalId(Token *token)
 	{
 		return _currentSub->FindLocal(_sourceCode->TakePart(token->Position, token->Length));
 	}
 
 	unsigned int Compiler::getHashFromNode(TreeNode *node)
 	{
-		return extractStringFromNode(node).Hash();
+		return getNodeString(node).Hash();
 	}
 }
