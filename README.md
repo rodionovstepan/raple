@@ -1,20 +1,16 @@
 Raple
 =====
 
-Raple is dynamically typed programming language which I developing for fun. It so happened that it also was my diploma project in University.
+Raple is dynamically typed programming language which I developing for fun. Earlier source code was hosted on codeplex.com and now I moved it to github.
 
-По-русски
+This project has a standart compiler architecture with lexical and syntax analyzers, compiler and virtual machine with runtime environment. So it's very interesting problem to create compilers and I'm trying to do it.
+
+Raple doesnt have garbage collector and working under Windows yet.
+
+Example of program on Raple
 =====
 
-Raple, название является рекурсивным акронимом Raple is Almost Programming LanguagE, - это язык программирования с динамической типизацией, который я разрабатывал для фана еще будучи студентом. Вообще, я всегда мечтал создать свой язык программирования - это очень интересно. Начал копать эту тему примерно в 2008-м году, в последующий год/два я переписывал несколько вариантов полностью с нуля, и так случилось, что он вырос во что-то рабочее. Раньше исходный код проекта хостился на http://raple.codeplex.com.
-Создал этот репозиторий для того, чтобы продолжать его разрабатывать в свободное время.
-
-Вообще, это безумно интересная и увлекательная задача.
-
-Пример программы на Raple
-=====
-
-В качестве примера показана реализация пирамидальной сортировки.
+To show the main features of Raple I have implemented an heap sort algorithm.
 
 ```ruby
 
@@ -63,17 +59,13 @@ sub main() {
 ```
 
 
-Подробности
+Details
 =====
 
-Проект состоит из следующих основных частей:
-- лексический анализатор
-- синтаксический анализатор
-- компилятор
-- виртуальная машина и среда выполнения
+Project parts:
+- lexical analyzer
+- syntax analyzer
+- compiler to raple bytecode
+- virtual machine & runtime environment.
 
-То есть типичный подход к разработке языков и компиляторов. Javascript, PHP, Ruby, C#, Java и т.д. построены по такой схеме, естественно в разной степени усложненной.
-
-Весь проект написан на С++, в среде Microsoft Visual Studio.
-
-Код покрыт модульными тестами.
+Written on C++ in Microsoft Visual Studio environment with unit tests on CppTest.
