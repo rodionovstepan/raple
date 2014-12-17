@@ -89,6 +89,7 @@ namespace RapleTests
 			addTest(CompilerTests::TestForDynamicCall);
 			addTest(CompilerTests::TestForDoubleCall);
 			addTest(CompilerTests::TestForComboIfExpressionCompilation);
+			addTest(CompilerTests::TestForForeachCompilation);
 		}
 
 		~CompilerTests()
@@ -698,6 +699,31 @@ namespace RapleTests
 				Raple::opInternalCall, Raple::opInternalCall, Raple::opSetLocal, 
 				Raple::opRet
 			};
+
+			CompareBytecodes(expected, bc);
+		}
+
+		void TestForForeachCompilation()
+		{
+			Bytecode *bc = CompileAndExpect("sub main(){foreach(var n in {1,2}){return n;}}", 26);
+
+			Opcode expected[26] = {
+				Raple::opPushInt, Raple::opSetLocal, Raple::opNewArray,
+				Raple::opPushInt, Raple::opPushInt, Raple::opGetLocal,
+				Raple::opSetElement, Raple::opPushInt, Raple::opPushInt, 
+				Raple::opGetLocal, Raple::opSetElement, Raple::opGetLocal,
+				Raple::opGetLocal, Raple::opGetNextElement, Raple::opPushInt,
+				Raple::opAdd, Raple::opSetLocal, Raple::opSetLocal, Raple::opGetLocal,
+				Raple::opArraySize, Raple::opGreater, Raple::opJumpNotZero,
+				Raple::opGetLocal, Raple::opRet, Raple::opGoto, Raple::opRet
+			};
+
+			unsigned int args[26] = {
+				0, 1, 2, 0, 0, 2, 0, 0, 0, 2, 0, 1, 2, 0, 0, 0, 1, 0, 1, 2, 0, 25, 0, 1, 11, 0
+			};
+
+			for (int i = 0; i < 26; ++i)
+				assertEquals(args[i], bc->GetInstruction(i)->Argument());
 
 			CompareBytecodes(expected, bc);
 		}
