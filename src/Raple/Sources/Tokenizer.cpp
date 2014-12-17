@@ -109,7 +109,7 @@ namespace Raple
 		{
 			if (_source[0] == '0')
 			{
-				//! Шестнадцатеричное число
+				//! hex
 				if (_source[1] == 'h')
 				{
 					int n;
@@ -122,7 +122,7 @@ namespace Raple
 					_tokenLength = n;
 					return(true);
 				}
-				//! Бинарное число
+				//! bin
 				else if (_source[1] == 'b')
 				{
 					int n;

@@ -261,7 +261,7 @@ namespace Raple
 
 		if (t.Type == ttString)
 		{
-			// обрезать кавычки
+			// trim "
 			++t.Position;
 			t.Length -= 2;
 		}
@@ -644,8 +644,7 @@ namespace Raple
 					node = new TreeNode(ntFunctionCall, &t1, node, parseFunctionCall());
 				else
 				{
-					// пока не умеем получать какое-то поле у объекта
-					// только вызов функции!
+					// only internal function call is now implemented
 					expectedTokenError("(, function call", t2.Position);
 					return node;
 				}
