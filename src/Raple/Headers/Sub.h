@@ -29,7 +29,7 @@ namespace Raple
 		~Sub()
 		{
 			delete _bytecode;
-			
+
 			for (std::vector<Var *>::iterator I = _locals.begin(); I != _locals.end(); ++I)
 				delete *I;
 		}
@@ -109,6 +109,15 @@ namespace Raple
 					return i;
 
 			return -1;
+		}
+
+		void Return()
+		{
+			int count = GetLocalsCount();
+
+			for (int i = 0; i < count; ++i)
+				if (_locals[i]->IsArg())
+					_locals[i]->Arg();
 		}
 
 	private:
