@@ -14,27 +14,51 @@ Raple, название является рекурсивным акронимо
 Пример программы на Raple
 =====
 
-Следующий код на языке Raple пишет в консоль только положительные числа из массива.
-Выполнение любой программы на raple начинается с выполнения функции main. В этой функции создается лямбда-функция, которая является предикатом для выборки положительных чисел из массива. Затем вызывается функция filter, которая проходит по массиву и печатает все элементы, удовлетворяющие переданному предикату.
+В качестве примера показана реализация пирамидальной сортировки.
 
 ```ruby
-sub filter(array, selector) {
- var i = 0, n = array.size();
 
- while (i++ < n) {
-  if (selector(array[i]))
-   io.println(array[i]);
- }
+sub xrange(l, r) {
+   var a = {};
+   while (l >= r) {
+      a.add(l--);
+   }
+   return a;
+}
+
+sub shiftdown(a, i, j) {
+   var done = false, maxchild = 0;
+
+   while ((i*2 + 1 < j) && done == false) {
+      if (i*2 + 1 == j-1)
+         maxchild = i*2 + 1;
+      else if (a[i*2 + 1] > a[i*2 + 2])
+         maxchild = i*2 + 1;
+      else
+         maxchild = i*2 + 2;
+
+      if (a[i] < a[maxchild]) {
+         swap(a, i, maxchild);
+         i = maxchild;
+      } else done = true;
+   }
+}
+
+sub heapsort(a) {
+   foreach (var i in xrange(a.size()/2 - 1, 0)) {
+      shiftdown(a, i, a.size());
+   }
+
+   foreach (var i in xrange(a.size()-1, 1)) {
+      swap(a, 0, i);
+      shiftdown(a, 0, i);
+   }
 }
 
 sub main() {
- var selector = sub(x) {
-  if (x > 0) return true;
-  return false;
- };
- 
- var array = {-2, 3, 5, 0, -4, -9, -1, 7};
- filter(array, selector);
+   var a = {9,1,7,2,6,3,5,4,8};
+   heapsort(a);
+   io.println(a);
 }
 ```
 
