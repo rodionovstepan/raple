@@ -817,7 +817,6 @@ namespace Raple
 
 		unsigned int iterIdx = _currentSub->AddNewAnonymousLocal(dtInteger);
 
-
 		addCodeInstructionWithInt(opPushInt, 0);
 		addCodeInstruction(opSetLocal, iterIdx);
 
@@ -834,11 +833,11 @@ namespace Raple
 		addCodeInstructionWithInt(opPushInt, 1);
 		addCodeInstruction(opAdd);
 		addCodeInstruction(opSetLocal, iterIdx);
+		addCodeInstruction(opSetLocal, iter);
 		addCodeInstruction(opGetLocal, iterIdx);
 		addCodeInstruction(opArraySize, arr);
 		addCodeInstruction(opGreater);
-		addCodeInstruction(opSetLocal, iter);
-
+		
 		unsigned int jumpIdx = _currentSub->GetBytecode()->InstructionCount();
 		addCodeInstruction(opJumpNotZero);
 		
