@@ -138,6 +138,8 @@ namespace Raple
 		float getNumeric(Var *frame, DataType type);
 		VirtualMachineResult callSub(Sub *sub, bool returnExpected);
 		VirtualMachineResult returnFromSub(bool returned);
+
+		void dumpStack();
 		
 	private:
 

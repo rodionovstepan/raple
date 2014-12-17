@@ -106,6 +106,26 @@ namespace Raple
 			return "<jmpnz>";
 		case opJumpZero:
 			return "<jmpz>";
+		case opArraySize:
+			return "<arrsize>";
+		case opNewArray:
+			return "<newarr>";
+		case opGetElement:
+			return "<getelem>";
+		case opSetElement:
+			return "<setelem>";
+		case opGetNextElement:
+			return "<getnextelem>";
+		case opInternalCall:
+			return "<intcall>";
+		case opStaticCall:
+			return "<statcall>";
+		case opDynamicCall:
+			return "<dyncall>";
+		case opPostInc:
+			return "<postinc>";
+		case opPostDec:
+			return "<postdec>";
 		}
 
 		return "<???>";
