@@ -7,12 +7,22 @@
 //
 //	bsort is a primitive bubble sort algorithm
 //
+//	heapsort is a heap sort :D
+//
 
 
 sub swap(a, i, j) {
    var tmp = a[i];
    a[i] = a[j];
    a[j] = tmp;
+}
+
+sub xrange(l, r) {
+   var a = {};
+   while (l >= r) {
+      a.add(l--);
+   }
+   return a;
 }
 
 sub qsort(a, f, l) {
@@ -48,5 +58,34 @@ sub bsort(a) {
          if (a[j] > a[j+1])
             swap(a, j, j+1);
       }
+   }
+}
+
+sub shiftdown(a, i, j) {
+   var done = false, maxchild = 0;
+
+   while ((i*2 + 1 < j) && done == false) {
+      if (i*2 + 1 == j-1)
+         maxchild = i*2 + 1;
+      else if (a[i*2 + 1] > a[i*2 + 2])
+         maxchild = i*2 + 1;
+      else
+         maxchild = i*2 + 2;
+
+      if (a[i] < a[maxchild]) {
+         swap(a, i, maxchild);
+         i = maxchild;
+      } else done = true;
+   }
+}
+
+sub heapsort(a) {
+   foreach (var i in xrange(a.size()/2 - 1, 0)) {
+      shiftdown(a, i, a.size());
+   }
+
+   foreach (var i in xrange(a.size()-1, 1)) {
+      swap(a, 0, i);
+      shiftdown(a, 0, i);
    }
 }
