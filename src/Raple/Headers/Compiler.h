@@ -60,6 +60,7 @@ namespace Raple
 		CompileResult compileWhile(TreeNode *whileNode);
 		CompileResult compileForEach(TreeNode *foreachNode);
 		CompileResult compileForEachArray(TreeNode *node);
+		CompileResult compileRange(TreeNode *node);
 
 		CompileResult compileImport(TreeNode *importNode);
 		

@@ -258,6 +258,10 @@ namespace Raple
 			result = compileAnonymousArrayInitList(item);
 			break;
 
+		case ntRange:
+			result = compileRange(item);
+			break;
+
 		case ntAnonymousSub:
 			result = compileAnonymousSub(item);
 			break;
@@ -933,6 +937,22 @@ namespace Raple
 			return result;
 
 		addCode(opGetLocal, id);
+		return crSuccess;
+	}
+
+	CompileResult Compiler::compileRange(TreeNode *node)
+	{
+		RapleAssert(node->ChildCount() == 2);
+
+		CompileResult result = compileExpression(node->GetChild(0));
+		if (result != crSuccess)
+			return result;
+
+		result = compileExpression(node->GetChild(1));
+		if (result != crSuccess)
+			return result;
+
+		addCode(opRange);
 		return crSuccess;
 	}
 

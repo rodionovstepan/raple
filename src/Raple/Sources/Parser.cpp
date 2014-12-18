@@ -806,12 +806,12 @@ namespace Raple
 		{
 			moveTo(&t);
 			node->SetType(ntRange);
-			node->AddChild(parseAssignment());
+			node->AddChild(parseExpression());
 			if (_syntaxError)
 				return node;
 
 			getNextToken(&t);
-			node->AddChild(parseAssignment());
+			node->AddChild(parseExpression());
 			if (_syntaxError)
 				return node;
 

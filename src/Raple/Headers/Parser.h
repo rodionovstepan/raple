@@ -33,7 +33,7 @@
 	WHILE         = 'while' '(' ASSIGNMENT ')' IFSTATEMENT
 	IMPORT        = 'import' IDENTIFIER ';'
 	FOREACH       = 'foreach' '(' 'var' IDENTIFIER 'in' (ASSIGNMENT | RANGE) ')' IFSTATEMENT
-	RANGE         = '{' ASSIGNMENT '->' ASSIGNMENT '}'
+	RANGE         = '{' EXPRESSION '->' EXPRESSION '}'
 */
 
 namespace Raple

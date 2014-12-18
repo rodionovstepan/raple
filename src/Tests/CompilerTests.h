@@ -90,6 +90,7 @@ namespace RapleTests
 			addTest(CompilerTests::TestForDoubleCall);
 			addTest(CompilerTests::TestForComboIfExpressionCompilation);
 			addTest(CompilerTests::TestForForeachCompilation);
+			addTest(CompilerTests::TestForRangeCompilation);
 		}
 
 		~CompilerTests()
@@ -724,6 +725,23 @@ namespace RapleTests
 
 			for (int i = 0; i < 26; ++i)
 				assertEquals(args[i], bc->GetInstruction(i)->Argument());
+
+			CompareBytecodes(expected, bc);
+		}
+
+		void TestForRangeCompilation()
+		{
+			Bytecode *bc = CompileAndExpect("sub main(){foreach(var n in {1->2}){return n;}}", 21);
+
+			Opcode expected[21] = {
+				Raple::opPushInt, Raple::opSetLocal, Raple::opPushInt, 
+				Raple::opPushInt, Raple::opRange, Raple::opSetLocal, 
+				Raple::opGetLocal, Raple::opGetLocal, Raple::opGetNextElement, 
+				Raple::opPushInt, Raple::opAdd, Raple::opSetLocal, 
+				Raple::opSetLocal, Raple::opGetLocal, Raple::opArraySize, 
+				Raple::opGreater, Raple::opJumpNotZero, Raple::opGetLocal, 
+				Raple::opRet, Raple::opGoto, Raple::opRet
+			};
 
 			CompareBytecodes(expected, bc);
 		}
