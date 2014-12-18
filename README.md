@@ -10,7 +10,7 @@ Raple doesnt have garbage collector and working under Windows yet.
 Example of program on Raple
 =====
 
-To show the main features of Raple I have implemented an heap sort algorithm.
+To show the main features of Raple I have implemented a heap sort algorithm.
 
 ```ruby
 
