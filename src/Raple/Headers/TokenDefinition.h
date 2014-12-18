@@ -117,6 +117,7 @@ namespace Raple
 		{ "sub", ttSub },
 		{ "fn", ttSub },
 		{ "var", ttVar },
+		{ "let", ttVar },
 		{ "if", ttIf },
 		{ "else", ttElse },
 		{ "return", ttReturn },
@@ -129,7 +130,8 @@ namespace Raple
 		{ "true", ttTrue },
 		{ "false", ttFalse },
 		{ "foreach", ttForEach },
-		{ "in", ttIn }
+		{ "in", ttIn },
+		{ "for", ttForEach }
 	};
 
 	const int NumberOfTokenWords = sizeof(TokenWords) / sizeof(TokenWord);
