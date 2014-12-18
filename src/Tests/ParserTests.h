@@ -581,7 +581,6 @@ namespace RapleTests
 			assertEquals(Raple::ntForEach, foreachNode->GetType());
 			assertEquals(3, foreachNode->ChildCount());
 			
-
 			TreeNode *range = foreachNode->GetChild(1);
 			assertEquals(Raple::ntRange, range->GetType());
 			assertEquals(2, range->ChildCount());

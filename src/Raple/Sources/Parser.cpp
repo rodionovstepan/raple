@@ -800,18 +800,19 @@ namespace Raple
 			return node;
 		}
 
-		Token t1;
-		getNextToken(&t1);
-		if (t1.Type == ttRange)
-		{
-			moveTo(&t);
-			node->SetType(ntRange);
-			node->AddChild(parseExpression());
-			if (_syntaxError)
-				return node;
+		moveTo(&t);
+		node->AddChild(parseAssignment());
+		if (_syntaxError)
+			return node;
 
+		getNextToken(&t);
+		moveTo(&t);
+		if (t.Type == ttRange)
+		{
 			getNextToken(&t);
-			node->AddChild(parseExpression());
+
+			node->SetType(ntRange);
+			node->AddChild(parseAssignment());
 			if (_syntaxError)
 				return node;
 
@@ -825,7 +826,6 @@ namespace Raple
 			expectedTokenError("}", t.Position);
 		}
 
-		moveTo(&t);
 		for (;;)
 		{
 			getNextToken(&t);
