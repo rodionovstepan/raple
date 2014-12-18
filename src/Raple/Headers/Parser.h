@@ -32,7 +32,8 @@
 	IFSTATEMENT   = STATBLOCK | STATEMENT
 	WHILE         = 'while' '(' ASSIGNMENT ')' IFSTATEMENT
 	IMPORT        = 'import' IDENTIFIER ';'
-	FOREACH       = 'foreach' '(' 'var' IDENTIFIER 'in' ASSIGNMENT ')' IFSTATEMENT
+	FOREACH       = 'foreach' '(' 'var' IDENTIFIER 'in' (ASSIGNMENT | RANGE) ')' IFSTATEMENT
+	RANGE         = '{' ASSIGNMENT '->' ASSIGNMENT '}'
 */
 
 namespace Raple

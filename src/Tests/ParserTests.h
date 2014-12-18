@@ -69,6 +69,7 @@ namespace RapleTests
 			addTest(ParserTests::CorrectlyParseReturnArrayList);
 			addTest(ParserTests::CorrectlyParseTrueFalseContants);
 			addTest(ParserTests::CorrectlyParseForEach);
+			addTest(ParserTests::CorrectlyParseRange);
 		}
 
 		~ParserTests()
@@ -566,6 +567,24 @@ namespace RapleTests
 			assertEquals(Raple::ntVarDeclaration, foreachNode->GetChild(0)->GetType());
 			assertEquals(Raple::ntArrayInitList, foreachNode->GetChild(1)->GetType());
 			assertEquals(Raple::ntStatementsBlock, foreachNode->GetChild(2)->GetType());
+		}
+
+		void CorrectlyParseRange()
+		{
+			SourceCode code("sub main(){ foreach(var x in {1 -> 2}) {} }");
+
+			TreeNode *root = _parser->ParseScript(&code);
+			TreeNode *body = root->GetChild(TreeIndexCode)->GetChild(TreeIndexSubBody);
+			assertEquals(1, body->ChildCount());
+
+			TreeNode *foreachNode = body->GetChild(0);
+			assertEquals(Raple::ntForEach, foreachNode->GetType());
+			assertEquals(3, foreachNode->ChildCount());
+			
+
+			TreeNode *range = foreachNode->GetChild(1);
+			assertEquals(Raple::ntRange, range->GetType());
+			assertEquals(2, range->ChildCount());
 		}
 
 

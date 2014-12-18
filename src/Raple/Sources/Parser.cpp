@@ -800,6 +800,31 @@ namespace Raple
 			return node;
 		}
 
+		Token t1;
+		getNextToken(&t1);
+		if (t1.Type == ttRange)
+		{
+			moveTo(&t);
+			node->SetType(ntRange);
+			node->AddChild(parseAssignment());
+			if (_syntaxError)
+				return node;
+
+			getNextToken(&t);
+			node->AddChild(parseAssignment());
+			if (_syntaxError)
+				return node;
+
+			getNextToken(&t);
+			if (t.Type == ttCloseStatementBlock)
+			{
+				node->UpdateData(t.Position, t.Length, t.Row);
+				return node;
+			}
+
+			expectedTokenError("}", t.Position);
+		}
+
 		moveTo(&t);
 		for (;;)
 		{
