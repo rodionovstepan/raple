@@ -42,6 +42,7 @@ namespace Raple
 		opSetElement,
 		opArraySize,
 		opGetNextElement,
+		opRange,
 
 		/* use argument */
 		opSetLocal,
