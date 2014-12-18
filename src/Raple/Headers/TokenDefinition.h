@@ -43,6 +43,7 @@ namespace Raple
 		ttLower,				// <
 		ttGreaterEqual,			// >=
 		ttLowerEqual,			// <=
+		ttRange,				// ->
 
 		ttAnd,					// &&, and
 		ttOr,					// ||, or
@@ -101,6 +102,7 @@ namespace Raple
 		{ "<", ttLower },
 		{ ">=", ttGreaterEqual },
 		{ "<=", ttLowerEqual },
+		{ "->", ttRange },
 
 		{ "&&", ttAnd },
 		{ "||", ttOr },
@@ -113,6 +115,7 @@ namespace Raple
 		{ "]", ttCloseBracket },
 
 		{ "sub", ttSub },
+		{ "fn", ttSub },
 		{ "var", ttVar },
 		{ "if", ttIf },
 		{ "else", ttElse },
