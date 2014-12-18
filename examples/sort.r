@@ -17,14 +17,6 @@ sub swap(a, i, j) {
    a[j] = tmp;
 }
 
-sub xrange(l, r) {
-   var a = {};
-   while (l >= r) {
-      a.add(l--);
-   }
-   return a;
-}
-
 sub qsort(a, f, l) {
    var i = f, 
       j = l,
@@ -80,11 +72,11 @@ sub shiftdown(a, i, j) {
 }
 
 sub heapsort(a) {
-   foreach (var i in xrange(a.size()/2 - 1, 0)) {
+   foreach (var i in { a.size()/2-1 -> 0 }) {
       shiftdown(a, i, a.size());
    }
 
-   foreach (var i in xrange(a.size()-1, 1)) {
+   foreach (var i in { a.size()-1 -> 1 }) {
       swap(a, 0, i);
       shiftdown(a, 0, i);
    }
