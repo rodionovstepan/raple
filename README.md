@@ -14,15 +14,13 @@ To show the main features of Raple I have implemented an heap sort algorithm.
 
 ```ruby
 
-sub xrange(l, r) {
-   var a = {};
-   while (l >= r) {
-      a.add(l--);
-   }
-   return a;
+fn swap(a, i, j) {
+  var tmp = a[i];
+  a[i] = a[j];
+  a[j] = tmp;
 }
 
-sub shiftdown(a, i, j) {
+fn shiftdown(a, i, j) {
    var done = false, maxchild = 0;
 
    while ((i*2 + 1 < j) && done == false) {
@@ -40,18 +38,18 @@ sub shiftdown(a, i, j) {
    }
 }
 
-sub heapsort(a) {
-   foreach (var i in xrange(a.size()/2 - 1, 0)) {
+fn heapsort(a) {
+   for (var i in { a.size()/2-1 -> 0 }) {
       shiftdown(a, i, a.size());
    }
 
-   foreach (var i in xrange(a.size()-1, 1)) {
+   for (var i in { a.size()-1 -> 1 }) {
       swap(a, 0, i);
       shiftdown(a, 0, i);
    }
 }
 
-sub main() {
+fn main() {
    var a = {9,1,7,2,6,3,5,4,8};
    heapsort(a);
    io.println(a);
