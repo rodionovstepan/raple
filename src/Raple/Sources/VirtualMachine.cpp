@@ -681,9 +681,15 @@ namespace Raple
 		int left = Pop()->Int();
 
 		HashArray *array = new HashArray();
-		for (; left <= right; ++left)
+		if (left > right)
 		{
-			array->Add(Var::CreateInt(left));
+			for (; right <= left; --left)
+				array->Add(Var::CreateInt(left));
+		}
+		else 
+		{
+			for (; left <= right; ++left)
+				array->Add(Var::CreateInt(left));
 		}
 
 		PushArrayPointer(array);
