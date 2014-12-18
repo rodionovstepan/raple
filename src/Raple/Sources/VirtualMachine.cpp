@@ -149,6 +149,10 @@ namespace Raple
 				result = executeGetNextElement();
 				break;
 
+			case opRange:
+				result = executeCreateRange();
+				break;
+
 			default:
 				logUnknownOpcode(instr->GetOpcode());
 				result = vmrUnknownOpcode;
@@ -666,6 +670,23 @@ namespace Raple
 		RapleAssert(local != 0 && local->GetDataType() == dtArray);
 
 		PushInt(local->Array()->ItemCount());
+		return vmrSuccess;
+	}
+
+	inline VirtualMachineResult VirtualMachine::executeCreateRange()
+	{
+		checkPop(2);
+
+		int right = Pop()->Int();
+		int left = Pop()->Int();
+
+		HashArray *array = new HashArray();
+		for (; left <= right; ++left)
+		{
+			array->Add(Var::CreateInt(left));
+		}
+
+		PushArrayPointer(array);
 		return vmrSuccess;
 	}
 

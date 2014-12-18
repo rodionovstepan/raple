@@ -161,6 +161,7 @@ namespace Raple
 		inline VirtualMachineResult executeGetNextElement();
 		inline VirtualMachineResult executeLogicOp(Opcode opcode);
 		inline VirtualMachineResult executeArraySize(unsigned int argument);
+		inline VirtualMachineResult executeCreateRange();
 	};
 }
 
