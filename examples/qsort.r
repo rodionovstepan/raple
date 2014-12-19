@@ -28,6 +28,6 @@ fn qsort(a, f, l) {
 
 fn main() {
    var a = {8,1,2,6,4,3,9,5,7};
-   qsort(a);
+   qsort(a, 0, a.size()-1);
    io.println(a);
 }
