@@ -22,9 +22,6 @@
     <Filter Include="src\log">
       <UniqueIdentifier>{d7679eee-22b5-4a01-be76-adba809d0616}</UniqueIdentifier>
     </Filter>
-    <Filter Include="examples">
-      <UniqueIdentifier>{dceb2b39-fb86-4573-9234-92d3802e7e8c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="include">
       <UniqueIdentifier>{23ff9899-f030-4c30-a70f-1654a99ce85b}</UniqueIdentifier>
     </Filter>
@@ -225,10 +222,5 @@
     <ClInclude Include="Headers\tinydir.h">
       <Filter>include</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Examples\sort.r">
-      <Filter>examples</Filter>
-    </None>
   </ItemGroup>
 </Project>

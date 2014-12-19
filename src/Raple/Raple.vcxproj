@@ -143,9 +143,6 @@
     <ClInclude Include="Headers\VirtualMachineResult.h" />
     <ClInclude Include="Headers\StringsLibrary.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Examples\sort.r" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
