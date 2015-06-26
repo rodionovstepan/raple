@@ -1,57 +1,47 @@
 Raple
 =====
 
-Raple is dynamically typed programming language which I developing for fun. Earlier source code was hosted on codeplex.com and now I moved it to github.
+Raple is dynamically typed programming language which I developing for fun. 
+Source code was moved to Github from Codeplex.
 
-This project has a standart compiler architecture with lexical and syntax analyzers, compiler and virtual machine with runtime environment. So it's very interesting problem to create compilers and I'm trying to do it.
+This lang has a standard compiler architecture with lexical and syntax analyzers, compiler and virtual machine with runtime environment. So it's very interesting problem to create compilers and I'm trying to do it.
 
-Raple doesnt have garbage collector and working under Windows yet.
+Raple doesn't have garbage collector and Windows-only yet.
 
-Example of program on Raple
+Example
 =====
 
-To show the main features of Raple I have implemented a heap sort algorithm.
+Implementation of Quick sort algorithm.
 
 ```ruby
 
 fn swap(a, i, j) {
-  var tmp = a[i];
-  a[i] = a[j];
-  a[j] = tmp;
+   var tmp = a[i];
+   a[i] = a[j];
+   a[j] = tmp;
 }
 
-fn shiftdown(a, i, j) {
-   var done = false, maxchild = 0;
-
-   while ((i*2 + 1 < j) && done == false) {
-      if (i*2 + 1 == j-1)
-         maxchild = i*2 + 1;
-      else if (a[i*2 + 1] > a[i*2 + 2])
-         maxchild = i*2 + 1;
-      else
-         maxchild = i*2 + 2;
-
-      if (a[i] < a[maxchild]) {
-         swap(a, i, maxchild);
-         i = maxchild;
-      } else done = true;
+fn qsort(a, f, l) {
+   var i = f, j = l,
+       x = a[(f+l)/2];
+   while (i <= j) {
+      while (a[i] < x) i++;
+      while (a[j] > x) j--;
+      
+      if (i <= j) {
+         if (a[i] > a[j])
+            swap(a, i, j);
+         i++;
+         j--;
+      }
    }
-}
-
-fn heapsort(a) {
-   for (var i in { a.size()/2-1 -> 0 }) {
-      shiftdown(a, i, a.size());
-   }
-
-   for (var i in { a.size()-1 -> 1 }) {
-      swap(a, 0, i);
-      shiftdown(a, 0, i);
-   }
+   if (i < l) qsort(a, i, l);
+   if (f < j) qsort(a, f, j);
 }
 
 fn main() {
-   var a = {9,1,7,2,6,3,5,4,8};
-   heapsort(a);
+   var a = {8,1,2,6,4,3,9,5,7};
+   qsort(a, 0, a.size()-1);
    io.println(a);
 }
 ```
@@ -60,7 +50,7 @@ fn main() {
 Details
 =====
 
-Project parts:
+Project modules:
 - lexical analyzer
 - syntax analyzer
 - compiler to raple bytecode
